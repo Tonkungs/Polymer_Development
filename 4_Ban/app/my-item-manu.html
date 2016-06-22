@@ -31,7 +31,7 @@
         <paper-icon-button icon="delete" data-dialog$="{{data.key}}" on-tap="deleteMenu" title="ลบเมนู"></paper-icon-button>
       </div>
     </paper-item>
-    <paper-dialog id="{{data.key}}.toggle()">
+    <paper-dialog id="{{data.key}}">
       <h2>Edit Menu</h2>
       <paper-input label="Name" value="{{data.name::input}}"></paper-input>
       <paper-input label="Icon" value="{{data.icon::input}}"></paper-input>
@@ -60,6 +60,7 @@
     });
 
     function clickHandler(e){
+      // console.log(111);
       var button = e.target;
       while (!button.hasAttribute('data-dialog') && button !== document.body) {
         button = button.parentElement;
@@ -68,7 +69,7 @@
         return;
       }
       var id = button.getAttribute('data-dialog');
-      console.log(id);
+      // console.log(id);
       var dialog = document.getElementById(id);
       if (dialog) {
         dialog.open();
