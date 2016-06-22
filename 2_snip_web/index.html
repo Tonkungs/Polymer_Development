@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Create a website with Polymer and Components</title>
+    <link href='https://fonts.googleapis.com/css?family=Roboto' rel='stylesheet' type='text/css'>
+    <link rel="import" href="css/style.html">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="../../../bower_components/webcomponentsjs/webcomponents-lite.js"></script>
+    <link rel="import" href="../../bower_components/polymer/polymer.html">
+    <!-- jquery v 3 -->
+    <script src="../../bower_components/jquery/dist/jquery.min.js" charset="utf-8"></script>
+    <link rel="import" href="../../bower_components/iron-icons/iron-icons.html">
+    <!-- เพิ่มปุ่ม -->
+    <link rel="import" href="../../bower_components/paper-button/paper-button.html">
+    <link rel="import" href="../../bower_components/paper-icon-button/paper-icon-button.html">
+    <link rel="import" href="../../bower_components/iron-flex-layout/iron-flex-layout.html">
+    <link rel="import" href="../../bower_components/paper-listbox/paper-listbox.html">
+    <link rel="import" href="../../bower_components/paper-item/paper-item.html">
+    <link rel="import" href="../../bower_components/paper-scroll-header-panel/paper-scroll-header-panel.html">
+    <link rel="import" href="../../bower_components/paper-toolbar/paper-toolbar.html">
+    <link rel="import" href="../../bower_components/paper-drawer-panel/paper-drawer-panel.html">
+    <link rel="import" href="../../bower_components/paper-dialog/paper-dialog.html">
+    <link rel="import" href="../../bower_components/paper-dialog-scrollable/paper-dialog-scrollable.html">
+    <link rel="import" href="../../bower_components/neon-animation/neon-animation.html">
+    <link rel="import" href="../../bower_components/paper-card/paper-card.html">
+    <link rel="import" href="../../bower_components/paper-toggle-button/paper-toggle-button.html">
+    <!-- ย้ายอิริเม็น -->
+    <link rel="import" href="../../bower_components/vaadin-grid/vaadin-grid.html">
+    <link rel="import" href="../../bower_components/iron-label/iron-label.html">
+    <link rel="import" href="../../bower_components/iron-input/iron-input.html">
+    <link rel="import" href="../../bower_components/paper-input/paper-input.html">
+    <!-- <link rel="import" href="../../bower_components/paper-datatable/paper-datatable.html"> -->
+  </head>
+
+<script src="../../bower_components/jquery-ui/jquery-ui.min.js"></script>
+
+
+  <body class="fullbleed layout vertical">
+
+<div id="web">
+<paper-drawer-panel id="paperDrawerPanel" responsive-width="960px">
+  <paper-scroll-header-panel drawer fixed>
+    <paper-toolbar>
+      <div class="title">Menu</div>
+    </paper-toolbar>
+    <ul id="paperlistbox_drawer" class="paperlistbox_drawer">
+      <!-- ใช้ paper-listbox แล้วมันจะคืนค่าเดิมทำให้เรียงเมนูอย่งาที่ต้องการไม่ได้ -->
+      <!-- <paper-listbox id="paperlistbox_drawer" attrForItemTitle="test" class="drawer_menu"> -->
+        <paper-item id="drive">
+          <div class="setting_drawer_menu">
+            <iron-icon class="icon-drawer" icon="icons:inbox"></iron-icon>
+          </div>
+          <div class="title_menu">ไดรฟ์ของฉัน</div>
+        </paper-item>
+
+        <paper-item id="share">
+          <div class="setting_drawer_menu">
+            <iron-icon class="icon-drawer" icon="icons:inbox"></iron-icon>
+          </div>
+          <div class="title_menu">ที่แชร์กับฉัน</div>
+        </paper-item>
+
+        <paper-item id="g_pic">
+          <div class="setting_drawer_menu">
+            <iron-icon class="icon-drawer" icon="icons:folder"></iron-icon>
+          </div>
+          <div class="title_menu">Google รูปภาพ</div>
+        </paper-item>
+
+        <paper-item id="laster">
+          <div class="setting_drawer_menu">
+            <iron-icon class="icon-drawer" icon="icons:folder"></iron-icon>
+          </div>
+          <div class="title_menu">ล่าสุด</div>
+        </paper-item>
+
+        <paper-item id="fav">
+          <div class="setting_drawer_menu">
+            <iron-icon class="icon-drawer" icon="icons:flag"></iron-icon>
+          </div>
+            <div class="title_menu">ที่ติดดาว</div>
+        </paper-item>
+
+        <paper-item id="bin">
+          <div class="setting_drawer_menu">
+            <iron-icon class="icon-drawer" icon="icons:drafts"></iron-icon>
+          </div>
+          <div class="title_menu">ถังขยะ</div>
+        </paper-item>
+      <!-- </paper-listbox> -->
+    </ul>
+  </paper-scroll-header-panel>
+    <!-- end drawer -->
+  <paper-scroll-header-panel class="main" main fixed>
+  <paper-toolbar >
+    <!-- paper-drawer-toggle  คือการสั่งให้ drawer ที่เราได้สร้างขึ้นมาก่อนหน้านั้นสามารถกดเปิดได้จากหน้าจอขนาดเล็กฝ -->
+    <paper-icon-button icon="menu" paper-drawer-toggle></paper-icon-button>
+    <div class="title">Create a website with Polymer and Components</div>
+    <paper-toggle-button id="change_editweb" onclick="change_editweb()">
+      Edit Website
+    </paper-toggle-button>
+    <paper-icon-button onclick="clickHandler(event)" data-dialog="setting_web_dialog" icon="settings" title="Setting Web" class="setting_web"></paper-icon-button>
+  </paper-toolbar>
+  <!-- paper-dialog  แอดทริบิว modal จะใช้ในกรณีตั้งให้กด ตกลงก่อนถึงจะปิดไดอาล็อกนั้นได้ -->
+  <paper-dialog modal class="dialog_setup" id="setting_web_dialog" entry-animation="scale-up-animation" exit-animation="fade-out-animation" with-backdrop >
+    <h2>Web Setting</h2>
+     <paper-dialog-scrollable>
+      <div class="container flex-horizontal-with-ratios" >
+        <div class="flex3child" >
+          <div class="font_color_1" >
+            Website Setting
+          </div>
+          <a href="#" onclick=""class="head_edit_link"><iron-icon icon="icons:file-download"></iron-icon>Download Setting</a>
+          <a href="#" onclick=""class="head_edit_link"><iron-icon icon="icons:file-upload"></iron-icon>Upload Setting</a>
+          <a href="#" onclick=""class="head_edit_link"><iron-icon icon="icons:save"></iron-icon>Save Setting</a>
+          <a href="#" data-dialog="add_drawer_menu" onclick="clickHandler(event)" class="head_edit_link"><iron-icon icon="icons:create"></iron-icon>Add Menu</a>
+          <a href="#" data-dialog="add_card_ui" onclick="clickHandler(event)" class="head_edit_link"><iron-icon icon="icons:list"></iron-icon>Add Card UI</a>
+        </div>
+        <div class="flex3child" id="head_right" >
+          <div class="font_color_1" >
+            Datasource Setting
+          </div>
+          <div class="scroll">
+          <table >
+            <thead>
+              <tr>
+                <td class="font_color_2 font_size_12 "style="min-width:300;">
+                  Name
+                </td>
+                <td class="font_color_2 font_size_12">
+                  Update Last
+                </td>
+                <td class="font_color_2 font_size_12">
+                  Action
+                </td>
+              </tr>
+            </thead>
+
+
+            <tbody >
+              <tr>
+                <td>
+                  terminal1
+                </td>
+                <td class="font_color_1">
+                  13:23:22
+                </td>
+                <td class="font_color_1">
+                  <paper-icon-button icon="refresh" class="edit_web_icon"></paper-icon-button>
+                  <paper-icon-button icon="delete" class="edit_web_icon"></paper-icon-button>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  terminal1
+                </td>
+                <td class="font_color_1">
+                  13:23:22
+                </td>
+                <td class="font_color_1">
+                  <paper-icon-button icon="refresh" class="edit_web_icon"></paper-icon-button>
+                  <paper-icon-button icon="delete" class="edit_web_icon"></paper-icon-button>
+                </td>
+              </tr>
+              <tr>
+                <td class="no_overflow">
+                  terminal1
+                </td>
+                <td class="font_color_1">
+                  13:23:22
+                </td>
+                <td class="font_color_1">
+                  <paper-icon-button icon="refresh" class="edit_web_icon"></paper-icon-button>
+                  <paper-icon-button icon="delete" class="edit_web_icon"></paper-icon-button>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  terminal1
+                </td>
+                <td class="font_color_1">
+                  13:23:22
+                </td>
+                <td class="font_color_1">
+                  <paper-icon-button icon="refresh" class="edit_web_icon"></paper-icon-button>
+                  <paper-icon-button icon="delete" class="edit_web_icon"></paper-icon-button>
+                </td>
+              </tr>
+              <tr>
+                <td >
+                  terminal1xxxxxxxxxxxxxxxx
+                </td>
+                <td class="font_color_1">
+                  13:23:22
+                </td>
+                <td class="font_color_1">
+                  <paper-icon-button icon="refresh" class="edit_web_icon"></paper-icon-button>
+                  <paper-icon-button icon="delete" class="edit_web_icon"></paper-icon-button>
+                </td>
+              </tr>
+            </tbody>
+
+          </table>
+
+        </div>
+
+        <!-- <vaadin-grid id="sasas" class="simple">
+          <table>
+          <colgroup>
+            <col name="firstName"/>
+            <col name="lastName"/>
+            <col name="email"/>
+          </colgroup>
+          </table>
+          </vaadin-grid> -->
+        </div>
+      </div>
+
+   <paper-button raised modal data-dialog="nested" onclick="clickHandler(event)" id="add_database">Add Datasource</paper-button>
+    <paper-dialog id="nested" entry-animation="scale-up-animation" exit-animation="fade-out-animation">
+          <h2>Dialog Title</h2>
+          <p> Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+          <div class="buttons">
+            <paper-button data-dialog="innerDialog" onclick="clickHandler(event)" >Open nested dialog</paper-button>
+          </div>
+        </paper-dialog>
+
+        <paper-dialog id="innerDialog">
+          <h2>Dialog Title</h2>
+          <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+        </paper-dialog>
+  </paper-dialog-scrollable>
+      <div class="buttons">
+        <paper-button raised dialog-dismiss id="dialog_cancel" class="btn_cancal">Cancel</paper-button>
+        <paper-button raised dialog-confirm autofocus id="dialog_ok" class="btn_ok">OK</paper-button>
+      </div>
+  </paper-dialog>
+
+
+<!-- เพิ่มเมนู -->
+  <paper-dialog id="add_drawer_menu" entry-animation="scale-up-animation" exit-animation="fade-out-animation">
+      <h2>Add Menu</h2>
+      <paper-dialog-scrollable>
+      <template is="dom-bind">
+        <div class="add_menu">
+          <paper-input id="add_menu_icon_pic" label="Icon Picture :" always-float-label placeholder="icon:menu" value="{{value_Icon_Pic::input}}" autofocus minlength="4" maxlength="30" required></paper-input>
+        </div>
+        <div class="add_menu">
+          <paper-input id="add_menu_icon_name" label="Icon Name :" always-float-label placeholder="Index" value="{{value_Icon_Name::input}}" minlength="2" maxlength="30" required></paper-input>
+        </div>
+        <div class="add_menu">
+          <paper-input id="add_menu_id" label="Id Menu :" always-float-label placeholder="drawer_index" value="{{value_Id_Menu::input}}" minlength="2" maxlength="30" required></paper-input>
+        </div>
+        <div class="add_menu">
+          <iron-label> The style icon. : <paper-icon-button icon="{{value_Icon_Pic}}"></paper-icon-button> {{value_Icon_Name}}</iron-label>
+        </div>
+      </template>
+    </paper-dialog-scrollable>
+      <div class="buttons">
+        <paper-button raised dialog-dismiss id="dialog_cancel_addmenu" class="btn_cancal">Cancel</paper-button>
+        <paper-button raised dialog-confirm autofocus id="dialog_ok_addmenu"  class="btn_ok" onclick="add_menu()">OK</paper-button>
+      </div>
+      <!-- data-dialog="add_drawer_menu" -->
+    </paper-dialog>
+<!--  จบเพิ่มเมนู-->
+<!-- แก้ไขเมนู -->
+  <paper-dialog with-backdrop id="edit_add_drawer_menu" entry-animation="scale-up-animation" exit-animation="fade-out-animation">
+      <h2>Edit Menu</h2>
+      <paper-dialog-scrollable>
+      <template is="dom-bind">
+        <div class="add_menu">
+          <paper-input  id="edit_add_menu_icon_pic" label="Icon Picture :" always-float-label placeholder="menu" value="{{edit_value_Icon_Pic::input}}" autofocus minlength="4" maxlength="30"></paper-input>
+        </div>
+        <div class="add_menu">
+          <paper-input id="edit_add_menu_icon_name" label="Icon Name :" always-float-label placeholder="หน้าแรก" value="{{edit_value_Icon_Name::input}}" minlength="2" maxlength="30"></paper-input>
+        </div>
+        <div class="add_menu">
+          <paper-input id="edit_add_menu_id" label="Id Menu :" always-float-label placeholder="drawer_index" value="{{value_Id_Menu::input}}" minlength="2" maxlength="30" required></paper-input>
+        </div>
+        <div class="add_menu">
+          <iron-label> The style icon. : <paper-icon-button icon="{{edit_value_Icon_Pic}}"></paper-icon-button> {{edit_value_Icon_Name}}</iron-label>
+        </div>
+      </template>
+      <div class="buttons">
+        <paper-button raised dialog-dismiss id="dialog_cancel_addmenu" class="btn_cancal">Cancel</paper-button>
+        <paper-button raised dialog-confirm autofocus id="dialog_ok_addmenu"  class="btn_ok" onclick="edit_menu_save(event)">OK</paper-button>
+      </div>
+    </paper-dialog-scrollable>
+      <!-- data-dialog="add_drawer_menu" -->
+    </paper-dialog>
+<!--  จบแก้ไขเมนู-->
+<!-- เพิ่มการ์ดเมนู -->
+  <paper-dialog with-backdrop id="add_card_ui" entry-animation="scale-up-animation" exit-animation="fade-out-animation">
+      <h2>Add Card UI</h2>
+      <paper-dialog-scrollable>
+        <div class="add_menu">
+          <paper-input id="add_card_ui_name" label="Card Name :" always-float-label placeholder="Menu" autofocus minlength="4" maxlength="30"></paper-input>
+        </div>
+        <div class="add_menu">
+          <paper-input id="add_card_ui_style" label="Card Style :" always-float-label placeholder="1" minlength="1" maxlength="1"></paper-input>
+        </div>
+        <div class="add_menu">
+          <paper-input id="add_card_id" label="Card ID :" always-float-label placeholder="1" minlength="1" maxlength="30"></paper-input>
+        </div>
+      <div class="buttons">
+        <paper-button raised dialog-dismiss id="dialog_cancel_addmenu" class="btn_cancal">Cancel</paper-button>
+        <paper-button raised dialog-confirm autofocus id="dialog_ok_addmenu"  class="btn_ok" onclick="addpane()">OK</paper-button>
+      </div>
+      </paper-dialog-scrollable>
+  </paper-dialog>
+<!--  จบเพิ่มการ์ดเมนู-->
+<!-- แก้ไขการ์ดเมนู -->
+  <paper-dialog with-backdrop id="edit_card_ui" entry-animation="scale-up-animation" exit-animation="fade-out-animation">
+      <h2>Add Card UI</h2>
+      <paper-dialog-scrollable>
+        <div class="add_menu">
+          <paper-input id="edit_card_ui_name" label="Card Name :" always-float-label placeholder="Menu" autofocus minlength="4" maxlength="30"></paper-input>
+        </div>
+        <div class="add_menu">
+          <paper-input id="edit_card_ui_style" label="Card Style :" always-float-label placeholder="1" minlength="1" maxlength="1"></paper-input>
+        </div>
+        <div class="add_menu">
+          <paper-input id="edit_card_id" label="Card ID :" always-float-label placeholder="Card_5" minlength="1" maxlength="30"></paper-input>
+        </div>
+      <div class="buttons">
+        <paper-button raised dialog-dismiss id="dialog_cancel_addmenu" class="btn_cancal">Cancel</paper-button>
+        <paper-button raised dialog-confirm autofocus id="dialog_ok_addmenu"  class="btn_ok" onclick="addpane()">OK</paper-button>
+      </div>
+      <paper-dialog-scrollable>
+  </paper-dialog>
+<!--  จบแก้ไขการ์ดเมนู-->
+<!-- paper-dialog_ok -->
+    <paper-dialog id="paper-dialog_ok" entry-animation="scale-up-animation" exit-animation="fade-out-animation">
+      <div class="head">
+        Success.
+      </div>
+    </paper-dialog>
+  <!-- จบ paper-dialog_ok -->
+  <!-- paper-dialog_error -->
+    <paper-dialog id="paper-dialog_error" entry-animation="scale-up-animation" exit-animation="fade-out-animation">
+      <div class="head">
+        Error Try again.
+      </div>
+    </paper-dialog>
+    <!-- จบ paper-dialog_ok -->
+  <!-- ข้อมูลตรง content -->
+    <div id="content" class="content">
+    <paper-card class="card_main card_main_1" id="card_1">
+      <div class="setting_card-ui"></div>
+      <div class="card-header">หัวข้อ 1</div>
+      <div class="card-content card_main">มีข้อมูลอะไรบ้างละ
+        <paper-button raised modal data-dialog="paper-dialog_ok" onclick="clickHandler(event)" id="add_database">ok</paper-button>
+        <paper-button raised modal data-dialog="paper-dialog_error" onclick="clickHandler(event)" id="add_database">error</paper-button>
+        <paper-button raised modal data-dialog="edit_card_ui" onclick="clickHandler(event)" id="add_database">แก้ไข</paper-button>
+      </div>
+    </paper-card>
+
+    <paper-card class="card_main card_main_1" id="card_2">
+      <div class="setting_card-ui"></div>
+      <div class="card-header">หัวข้อ 2</div>
+      <div class="card-content">มีข้อมูลอะไรบ้างละ
+        <vaadin-grid class="simple">
+          <table>
+            <colgroup>
+              <col>
+              <col>
+              <col>
+            </colgroup>
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Value</th>
+                <th>Progress</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Project A</td>
+                <td>10000</td>
+                <td>0.8</td>
+              </tr>
+              <tr>
+                <td>Project B</td>
+                <td>999999</td>
+                <td>0.8</td>
+              </tr>
+            </tbody>
+          </table>
+        </vaadin-grid>
+      </div>
+    </paper-card>
+
+    <paper-card class="card_main card_main_1" id="card_3">
+      <div class="setting_card-ui"></div>
+      <div class="card-header">หัวข้อ 3</div>
+      <div class="card-content">มีข้อมูลอะไรบ้างละ
+      </div>
+    </paper-card>
+
+  </div>  <!-- end content -->
+  </paper-scroll-header-panel>
+  </paper-drawer-panel>
+  </div>
+  <script src="js/javascript.js"></script>
+  </body>
+</html>

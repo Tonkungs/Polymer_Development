@@ -1,0 +1,35 @@
+<!-- import -->
+<link rel="import" href="../../../bower_components/polymer/polymer.html">
+<link rel="import" href="../../../bower_components/iron-ajax/iron-ajax.html">
+<dom-module id="employee-list">
+
+  <template>
+  <iron-ajax auto
+             url="../data/test.json"
+             handle-as="json"
+             last-response="{{employees}}"></iron-ajax>
+    <div> Employee list:   การทำ 2 ชั้น</div>
+    <template is="dom-repeat" items="{{employees}}" as="tetet">
+        <div>First name: <span>{{tetet.first}}</span></div>
+        <div>Last name: <span>{{tetet.last}}</span></div>
+        <template is="dom-repeat" items="{{tetet.set}}" as="test2">
+          <div>Last name: <span>{{test2.e}}</span></div>
+          <div>Last name: <span>{{test2.d}}</span></div>
+        </template>
+   </template>
+
+  </template>
+
+  <script>
+    Polymer({
+      is: 'employee-list',
+      // ready: function() {
+      //   this.employees = [
+      //       {first: 'Bob', last: 'Smith' ,set:[{e:'1',d:'1' }]},
+      //       {first: 'Sally', last: 'Johnson',set:[{e:'2',d:'1' }]}
+      //   ];
+      // }
+    });
+  </script>
+
+</dom-module>

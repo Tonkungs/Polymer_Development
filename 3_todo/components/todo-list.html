@@ -1,0 +1,27 @@
+<link rel="import" href="../../../bower_components/polymer/polymer.html">
+<dom-module id="todo-list">
+  <template>
+    <dir>todo-list</dir>
+    <template is="dom-repeat" as="todo" items="{{data}}">
+      {{todo.name}} <br>
+    </template>
+    <button on-tap="_editData">change</button>
+  </template>
+
+  <script>
+    Polymer({
+      is: 'todo-list',
+      properties: {
+        data: {
+          type: Object,
+          notify: true
+        }
+      },
+      _editData:function(){
+        // this.data[0].name="May";
+        // console.log(this.data);
+        this.splice('data', 0, 1);
+      }
+    });
+  </script>
+</dom-module>

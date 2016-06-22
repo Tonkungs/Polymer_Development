@@ -1,0 +1,178 @@
+<style is="custom-style">
+  body{
+    font-family: 'Roboto', sans-serif;
+    margin: 0 !important;
+    padding: 0 !important;
+    /*background: #101214;*/
+  }
+  #change_editweb{
+    --paper-toggle-button-checked-bar-color:  var(--paper-green-500);
+    --paper-toggle-button-checked-button-color:  var(--paper-green-500);
+    --paper-toggle-button-checked-ink-color: var(--paper-green-500);
+    --paper-toggle-button-unchecked-bar-color:  var(--paper-teal-500);
+    --paper-toggle-button-unchecked-button-color:  var(--paper-teal-500);
+    --paper-toggle-button-unchecked-ink-color: var(--paper-teal-500);
+  }
+  .flex-horizontal-with-ratios {
+    /*สั่งเรียงแบบแนวนอน*/
+    @apply(--layout-horizontal);
+    /*สั่งเรียงแบบแนวตั้ง*/
+    @apply(--layout-vertical);
+  }
+  .flexchild {
+    @apply(--layout-flex);
+  }
+  .flex3child {
+    @apply(--layout-flex-3);
+    /*color: #AE8850;*/
+  }
+  /*หัวข้อเพิ่มเมนู*/
+  .head_edit_link{
+    display: inline;
+    padding: 3px;
+    border: 1px solid #4B4B4B;
+  }
+  a{  /* สีตัวอักษร*/
+    text-decoration: none;
+    color: black;
+    font-size: 12px;
+    padding: 2px;
+  }
+  a:hover{
+    background: #4B4B4B;
+    color: #FFF;
+  }
+  /*จัดการ font*/
+  .font_color_1{
+    padding: 5px 5px 5px 0px;
+    font-weight: bold;
+  }
+  paper-icon-button.edit_web_icon{
+    color: black;
+  }
+  paper-icon-button.edit_web_icon:hover{
+    background-color: #4B4B4B;
+    color: #FFF;
+  }
+ /* id paperDrawerPanel ที่มี แอททริบิว main อยู่*/
+  #paperDrawerPanel [main] {
+    background-color: var(--google-grey-100);
+  }
+  #paperDrawerPanel [drawer] {
+    border-right: 1px solid var(--google-grey-300);
+  }
+  /*ความยาวของไดอาล็อกมากสด*/
+  .dialog_setup{
+    /*min-width: 600px;*/
+    max-width: 600px;
+    /*max-height: 300px;*/
+  }
+  paper-card.card_main {
+    margin: 5px;
+  }
+  .card_main_1{
+    min-width: 315px;
+    max-width: 315px;
+  }
+  .card_main_2{
+    min-width: 635px;
+    max-width: 635px;
+  }
+  .card_main_3{
+    min-width: 960px;
+    max-width: 960px;
+  }
+  div .content{
+    @apply(--layout-horizontal);  /*จัดเรียงแนวนอน*/
+    @apply(--layout-wrap);   /*จัดให้อยู่ใน flex*/
+    /*@apply(--layout-around-justified);*/
+    padding:5px; /*ห่างจาก card ui*/
+    /*width: 1024px;*/
+  }
+  /*ปรับแต่งเมนูด้านข้าง*/
+  ul{
+    list-style-type: none;  /*สั่งไม่มีจุด*/
+    margin: 0;
+    padding: 0;
+  }
+  ul > paper-item >div.title_menu {
+    padding-left: 8px;
+   /*background-color: red;*/
+  }
+  ul > paper-item > div.setting_drawer_menu>paper-icon-button {
+    color: black;
+   /*background-color: red;*/
+  }
+  ul > paper-item > div.setting_drawer_menu>paper-icon-button:hover {
+   background-color: black;
+   color: white;
+  }
+
+  .simple {
+    height: 300px;
+    width: auto;
+  }
+/*ตัวต้องติดกัน ถ้าไม่ติดกันจะไม่แสดงผล*/
+  paper-button.btn_ok {
+  background-color: var(--paper-green-500);
+  color: white;
+  }
+  paper-button.btn_ok:hover {
+    background-color: var(--paper-green-100);
+  }
+  paper-button.btn_cancal {
+  background-color: var(--paper-red-500);
+  color: white;
+  }
+  paper-button.btn_cancal:hover {
+    background-color: var(--paper-red-100);
+  }
+  table{
+    min-width:570px;
+  }
+  /*css เพิ่มเมนู*/
+  div.add_menu{
+    display: block;
+  }
+  div.add_menu>iron-label{
+    text-align: center;
+  }
+  #paper-dialog_ok{
+        border: 2px solid;
+        border-color: var(--paper-green-500);
+        background-color: var(--paper-light-green-50);
+        color: var(--paper-green-500);
+  }
+  #paper-dialog_error{
+        border: 2px solid;
+        border-color: var(--paper-red-500);
+        background-color: var(--paper-deep-orange-50);
+        color: var(--paper-red-500);
+  }
+  .highlight {
+         border: 1px solid red;
+         font-weight: bold;
+         font-size: 45px;
+         background-color: #333333;
+      }
+  .setting_card-ui{
+    /*จัดชิดขวา*/
+    float: right;
+  }
+  /*หัวการ์ด*/
+  .card-header{
+    @apply(--paper-font-headline);
+    padding: 16px;
+  }
+  .setting_card-ui paper-icon-button.card_setting {
+    color: black;
+    width: 30px;
+    height: 30px;
+    vertical-align:super;
+    --paper-icon-button-ink-color: var(--paper-indigo-500);
+  }
+  .setting_card-ui paper-icon-button.card_setting:hover {
+    background-color: black;
+    color: white;
+  }
+</style>

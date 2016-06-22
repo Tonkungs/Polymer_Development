@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>dialog</title>
+    <script src="../../../../bower_components/webcomponentsjs/webcomponents-lite.js"></script>
+    <link rel="import" href="../../../bower_components/polymer/polymer.html">
+    <link rel="import" href="../../../bower_components/paper-dialog/paper-dialog.html">
+    <link rel="import" href="../../../bower_components/paper-dialog-scrollable/paper-dialog-scrollable.html">
+    <link rel="import" href="../../../bower_components/neon-animation/neon-animation.html">
+    <link rel="import" href="../../../bower_components/paper-input/paper-input.html">
+    <link rel="import" href="../../../bower_components/iron-label/iron-label.html">
+    <link rel="import" href="../../../bower_components/paper-icon-button/paper-icon-button.html">
+    <link rel="import" href="../../../bower_components/paper-button/paper-button.html">
+    <link rel="import" href="../../../bower_components/iron-icons/iron-icons.html">
+  </head>
+  <body>
+    <paper-dialog modal class="dialog_setup" id="setting_web_dialog" entry-animation="scale-up-animation" exit-animation="fade-out-animation" with-backdrop >
+      <h2>Web Setting</h2>
+       <paper-dialog-scrollable>
+        <div class="container flex-horizontal-with-ratios" >
+          <div class="flex3child" >
+            <div class="font_color_1" >
+              Website Setting
+            </div>
+            <a href="#" onclick=""class="head_edit_link"><iron-icon icon="icons:file-download"></iron-icon>Download Setting</a>
+            <a href="#" onclick=""class="head_edit_link"><iron-icon icon="icons:file-upload"></iron-icon>Upload Setting</a>
+            <a href="#" onclick=""class="head_edit_link"><iron-icon icon="icons:save"></iron-icon>Save Setting</a>
+            <a href="#" data-dialog="add_drawer_menu" onclick="clickHandler(event)" class="head_edit_link"><iron-icon icon="icons:create"></iron-icon>Add Menu</a>
+            <a href="#" data-dialog="add_card_ui" onclick="clickHandler(event)" class="head_edit_link"><iron-icon icon="icons:list"></iron-icon>Add Card UI</a>
+          </div>
+          <div class="flex3child" id="head_right" >
+            <div class="font_color_1" >
+              Datasource Setting
+            </div>
+            <div class="scroll">
+            <table >
+              <thead>
+                <tr>
+                  <td class="font_color_2 font_size_12 "style="min-width:300;">
+                    Name
+                  </td>
+                  <td class="font_color_2 font_size_12">
+                    Update Last
+                  </td>
+                  <td class="font_color_2 font_size_12">
+                    Action
+                  </td>
+                </tr>
+              </thead>
+
+
+              <tbody >
+                <tr>
+                  <td>
+                    terminal1
+                  </td>
+                  <td class="font_color_1">
+                    13:23:22
+                  </td>
+                  <td class="font_color_1">
+                    <paper-icon-button icon="refresh" class="edit_web_icon"></paper-icon-button>
+                    <paper-icon-button icon="delete" class="edit_web_icon"></paper-icon-button>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    terminal1
+                  </td>
+                  <td class="font_color_1">
+                    13:23:22
+                  </td>
+                  <td class="font_color_1">
+                    <paper-icon-button icon="refresh" class="edit_web_icon"></paper-icon-button>
+                    <paper-icon-button icon="delete" class="edit_web_icon"></paper-icon-button>
+                  </td>
+                </tr>
+                <tr>
+                  <td class="no_overflow">
+                    terminal1
+                  </td>
+                  <td class="font_color_1">
+                    13:23:22
+                  </td>
+                  <td class="font_color_1">
+                    <paper-icon-button icon="refresh" class="edit_web_icon"></paper-icon-button>
+                    <paper-icon-button icon="delete" class="edit_web_icon"></paper-icon-button>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    terminal1
+                  </td>
+                  <td class="font_color_1">
+                    13:23:22
+                  </td>
+                  <td class="font_color_1">
+                    <paper-icon-button icon="refresh" class="edit_web_icon"></paper-icon-button>
+                    <paper-icon-button icon="delete" class="edit_web_icon"></paper-icon-button>
+                  </td>
+                </tr>
+                <tr>
+                  <td >
+                    terminal1xxxxxxxxxxxxxxxx
+                  </td>
+                  <td class="font_color_1">
+                    13:23:22
+                  </td>
+                  <td class="font_color_1">
+                    <paper-icon-button icon="refresh" class="edit_web_icon"></paper-icon-button>
+                    <paper-icon-button icon="delete" class="edit_web_icon"></paper-icon-button>
+                  </td>
+                </tr>
+              </tbody>
+
+            </table>
+
+          </div>
+
+          <!-- <vaadin-grid id="sasas" class="simple">
+            <table>
+            <colgroup>
+              <col name="firstName"/>
+              <col name="lastName"/>
+              <col name="email"/>
+            </colgroup>
+            </table>
+            </vaadin-grid> -->
+          </div>
+        </div>
+
+     <paper-button raised modal data-dialog="nested" onclick="clickHandler(event)" id="add_database">Add Datasource</paper-button>
+      <paper-dialog id="nested" entry-animation="scale-up-animation" exit-animation="fade-out-animation">
+            <h2>Dialog Title</h2>
+            <p> Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+            <div class="buttons">
+              <paper-button data-dialog="innerDialog" onclick="clickHandler(event)" >Open nested dialog</paper-button>
+            </div>
+          </paper-dialog>
+
+          <paper-dialog id="innerDialog">
+            <h2>Dialog Title</h2>
+            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+          </paper-dialog>
+    </paper-dialog-scrollable>
+        <div class="buttons">
+          <paper-button raised dialog-dismiss id="dialog_cancel" class="btn_cancal">Cancel</paper-button>
+          <paper-button raised dialog-confirm autofocus id="dialog_ok" class="btn_ok">OK</paper-button>
+        </div>
+    </paper-dialog>
+
+
+  <!-- เพิ่มเมนู -->
+    <paper-dialog id="add_drawer_menu" entry-animation="scale-up-animation" exit-animation="fade-out-animation">
+        <h2>Add Menu</h2>
+        <template is="dom-bind">
+          <div class="add_menu">
+            <paper-input id="add_menu_icon_pic" label="Icon Picture :" always-float-label placeholder="menu" value="{{value_Icon_Pic::input}}" autofocus minlength="4" maxlength="30"></paper-input>
+          </div>
+          <div class="add_menu">
+            <paper-input id="add_menu_icon_name" label="Icon Name :" always-float-label placeholder="หน้าแรก" value="{{value_Icon_Name::input}}" minlength="2" maxlength="30"></paper-input>
+          </div>
+          <div class="add_menu">
+            <iron-label> The style icon. : <paper-icon-button icon="{{value_Icon_Pic}}"></paper-icon-button> {{value_Icon_Name}}</iron-label>
+
+          </div>
+        </template>
+        <div class="buttons">
+          <paper-button raised dialog-dismiss id="dialog_cancel_addmenu" class="btn_cancal">Cancel</paper-button>
+          <paper-button raised dialog-confirm autofocus id="dialog_ok_addmenu"  class="btn_ok" onclick="add_menu()">OK</paper-button>
+        </div>
+        <!-- data-dialog="add_drawer_menu" -->
+      </paper-dialog>
+  <!--  จบเพิ่มเมนู-->
+  <!-- เพิ่มการ์ดเมนู -->
+    <paper-dialog id="add_card_ui" entry-animation="scale-up-animation" exit-animation="fade-out-animation">
+        <h2>Add Card UI</h2>
+          <div class="add_menu">
+            <paper-input id="add_card_ui_name" label="Card Name :" always-float-label placeholder="Menu" autofocus minlength="4" maxlength="30"></paper-input>
+          </div>
+
+        <div class="buttons">
+          <paper-button raised dialog-dismiss id="dialog_cancel_addmenu" class="btn_cancal">Cancel</paper-button>
+          <paper-button raised dialog-confirm autofocus id="dialog_ok_addmenu"  class="btn_ok" onclick="addpane()">OK</paper-button>
+        </div>
+    </paper-dialog>
+  <!--  จบเพิ่มการ์ดเมนู-->
+  <!-- paper-dialog_ok -->
+      <paper-dialog id="paper-dialog_ok" entry-animation="scale-up-animation" exit-animation="fade-out-animation">
+        <div class="head">
+          เพิ่มข้อมูลสำเร็จ
+        </div>
+      </paper-dialog>
+    <!-- จบ paper-dialog_ok -->
+    <!-- paper-dialog_error -->
+      <paper-dialog id="paper-dialog_error" entry-animation="scale-up-animation" exit-animation="fade-out-animation">
+        <div class="head">
+          ไม่สามารถเพิ่มข้อมูลได้ เนื่องจากมีข้อผิดผลาดบ้างอย่าง
+        </div>
+      </paper-dialog>
+      <!-- จบ paper-dialog_ok -->
+  </body>
+</html>

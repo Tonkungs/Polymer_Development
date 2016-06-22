@@ -1,0 +1,68 @@
+<!-- import -->
+<link rel="import" href="../../../bower_components/polymer/polymer.html">
+<link rel="import" href="../../../bower_components/iron-icons/iron-icons.html">
+<link rel="import" href="../../../bower_components/paper-icon-button/paper-icon-button.html">
+<link rel="import" href="../../../bower_components/paper-button/paper-button.html">
+<link rel="import" href="../../../bower_components/paper-styles/color.html">
+<link rel="import" href="../../../bower_components/paper-fab/paper-fab.html">
+<link rel="import" href="my-item-manu.html">
+<dom-module id="my-draft-web">
+  <style media="screen">
+    #menu_add{
+      position: absolute;
+      right: 0;
+      bottom: 0px;
+      margin: 10px;
+    }
+  </style>
+  <template>
+    <!-- {{testData}}<br>{{menus}} -->
+    <template is="dom-repeat" items="{{menus}}" as="menu">
+      <my-item-manu data="{{menu}}"></my-item-manu>
+    </template>
+    <paper-fab mini icon="add" id ="menu_add" data-dialog="dialog" on-tap="addMenu"></paper-fab>
+  </template>
+  <script type="text/javascript">
+      Polymer({
+        is: "my-draft-web",
+        properties: {
+          menus: {
+            type: Object
+          }
+        },
+        ready:function(){
+          //เข้าถึงตัวแปลข้างนอกได้จากการใช้งาน =>
+          const testfn = (data) => {
+            this.menus = data;
+          }
+          var newPostKey = firebase.database().ref().child('/menus').push().key;
+          let menus = [];
+          let datasRef = firebase.database().ref("/menus");
+          datasRef.on('value', (snapshot)=>{
+            menus = [];
+            let dataEach;
+            snapshot.forEach(function(childSnapshot){
+              dataEach = childSnapshot.val();
+              dataEach.key = childSnapshot.key;
+              menus.push(dataEach);
+            });
+            // menuProps(menus);
+            // console.log(menus);
+            testfn(menus);
+          });
+        },
+        addMenu: function(){
+          var newPostKey = firebase.database().ref().child('menus').push().key;
+          var postData = {
+            name:"ทดสอบ",
+            icon:"apps",
+            key:newPostKey
+          };
+          var updates = {};
+          updates['/menus/' + newPostKey] = postData;
+          return firebase.database().ref().update(updates);
+        }
+
+      });
+  </script>
+</dom-module>

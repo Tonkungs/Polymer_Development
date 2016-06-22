@@ -1,0 +1,58 @@
+{
+  "version" : 1,
+  "allow_edit" : true,
+  "menu" :
+  [  {
+      "icon_name" : "Index",
+      "icon_pic" : "icons:menu",
+      "icon_url" : "/index",
+      "sub_menu" : [{
+        "icon_name" : "dashboard",
+        "icon_pic" : "icons:dashboard",
+        "icon_url" : "/index/dashboard"
+        }]
+    },
+    {
+      "icon_name" : "Bin",
+      "icon_pic" : "icons:delete",
+      "icon_url" : "/bin",
+      "sub_menu" : [{
+        "icon_name" : "face",
+        "icon_pic" : "icons:face",
+        "icon_url" : "/index/face"
+        }]
+    },
+    {
+      "icon_name" : "Drafts",
+      "icon_pic" : "icons:drafts",
+      "icon_url" : "/drafts",
+      "sub_menu" : [{}]
+    }
+  ],
+  "panes" : [],
+  "datasources" : [
+    {
+      "type" : "json",
+      "name" : "Json_Test",
+      "settings" : [{
+        "url" : "/datasources.json",
+        "try_proxy": false,
+        "refresh_rate" : 5,
+        "method_j" : "GET",
+        "body_j" : ""
+      }]
+    },
+    {
+      "type" : "json",
+      "name" : "Json_Test_2",
+      "settings" : [{
+        "url" : "/dat.json",
+        "try_proxy": false,
+        "refresh_rate" : 8,
+        "method_j" : "POST",
+        "body_j" : ""
+      }]
+    }
+  ],
+  "columns" : 3
+}

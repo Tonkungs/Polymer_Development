@@ -1,0 +1,26 @@
+<link rel="import" href="../../../bower_components/polymer/polymer.html">
+<link rel="import" href="../../../bower_components/paper-styles/color.html">
+<link rel="import" href="../../../bower_components/paper-styles/color.html">
+<link rel="import" href="../../../bower_components/paper-styles/color.html">
+<dom-module id="my-data">
+  <style>
+    :host {
+      display: block;
+    }
+  </style>
+  <template>
+      <span>dsd</span>
+  </template>
+</dom-module>
+<script>
+  Polymer({
+    is: "my-data",
+    ready: function() {
+      $.get('../data/data.json', function(data){
+        this.emp = $.parseJSON(data).results;
+        console.log(this.emp);
+      }.bind(this));
+    },
+
+  });
+</script>

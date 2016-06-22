@@ -1,0 +1,31 @@
+<link rel="import" href="../../../bower_components/polymer/polymer.html">
+<link rel="import" href="todo-list.html">
+
+<dom-module id="todo-app">
+  <template>
+    <dir>todo-app</dir>
+    <button on-tap="_editDatat">change</button>
+    <todo-list data="{{data}}"></todo-list>
+
+  </template>
+
+  <script>
+    Polymer({
+      is: 'todo-app',
+      properties: {
+        data:{
+          type:Object,
+          value: function(){return [
+            {name:"Namkhaeng"},
+            {name:"ton"},
+            {name:"Oam"}
+          ]}
+        }
+      },
+      _editDatat:function(){
+
+        this.splice('data', 0, 1);
+      }
+    });
+  </script>
+</dom-module>

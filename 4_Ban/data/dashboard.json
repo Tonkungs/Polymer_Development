@@ -1,0 +1,235 @@
+{
+	"version": 1,
+	"allow_edit": true,
+	"plugins": [],
+	"panes": [
+		{
+			"title": "Terminal 1",
+			"width": 1,
+			"row": {
+				"3": 1
+			},
+			"col": {
+				"3": 1
+			},
+			"col_width": 1,
+			"widgets": [
+				{
+					"type": "text_widget",
+					"settings": {
+						"size": "regular",
+						"value": "datasources[\"clock\"][\"date_string_value\"]",
+						"animate": true
+					}
+				},
+				{
+					"type": "text_widget",
+					"settings": {
+						"size": "regular",
+						"value": "datasources[\"clock\"][\"time_string_value\"]",
+						"animate": true
+					}
+				}
+			]
+		},
+		{
+			"width": 1,
+			"row": {
+				"3": 1
+			},
+			"col": {
+				"3": 2
+			},
+			"col_width": 1,
+			"widgets": [
+				{
+					"type": "gauge",
+					"settings": {
+						"title": "Temp 1",
+						"value": "datasources[\"terminal1\"][\"m001\"][\"temp\"]",
+						"units": "c",
+						"min_value": 0,
+						"max_value": 100
+					}
+				}
+			]
+		},
+		{
+			"width": 1,
+			"row": {
+				"3": 1
+			},
+			"col": {
+				"3": 3
+			},
+			"col_width": 1,
+			"widgets": [
+				{
+					"type": "gauge",
+					"settings": {
+						"title": "Temp 2",
+						"value": "datasources[\"terminal1\"][\"m001\"][\"temp\"]",
+						"units": "c",
+						"min_value": 0,
+						"max_value": 100
+					}
+				}
+			]
+		},
+		{
+			"title": "Control Logic",
+			"width": 1,
+			"row": {
+				"3": 7,
+				"4": 1
+			},
+			"col": {
+				"3": 1,
+				"4": 1
+			},
+			"col_width": 1,
+			"widgets": [
+				{
+					"type": "switchWidget",
+					"settings": {
+						"title": "Switch 1",
+						"value": "datasources[\"terminal1\"][\"m001\"][\"config\"][\"digital\"][\"output\"][\"1\"]",
+						"clientid": "314ebfed-fcbb-8bc7-c03d-bae866662336",
+						"topic": "m001/config/digital/output/1"
+					}
+				},
+				{
+					"type": "switchWidget",
+					"settings": {
+						"title": "Switch 2",
+						"value": "datasources[\"terminal1\"][\"m001\"][\"config\"][\"digital\"][\"output\"][\"2\"]",
+						"clientid": "314ebfed-fcbb-8bc7-c03d-bae866662336",
+						"topic": "m001/config/digital/output/2"
+					}
+				},
+				{
+					"type": "rangeWidget",
+					"settings": {
+						"title": "PWM",
+						"value": "datasources[\"terminal1\"][\"m001\"][\"config\"][\"pwm\"]",
+						"min": 0,
+						"max": 100,
+						"clientid": "314ebfed-fcbb-8bc7-c03d-bae866662336",
+						"topic": "m001/config/pwm"
+					}
+				},
+				{
+					"type": "rangeWidget",
+					"settings": {
+						"title": "Temp",
+						"value": "datasources[\"terminal1\"][\"m001\"][\"temp\"]",
+						"min": 0,
+						"max": 100,
+						"clientid": "314ebfed-fcbb-8bc7-c03d-bae866662336",
+						"topic": "m001/temp"
+					}
+				},
+				{
+					"type": "google_map",
+					"settings": {
+						"lat": "13.7003933",
+						"lon": "100.2878041"
+					}
+				}
+			]
+		},
+		{
+			"title": "Temp",
+			"width": 1,
+			"row": {
+				"3": 9
+			},
+			"col": {
+				"3": 2
+			},
+			"col_width": "2",
+			"widgets": [
+				{
+					"type": "text_widget",
+					"settings": {
+						"title": "Graph",
+						"size": "regular",
+						"value": "datasources[\"terminal1\"][\"m001\"][\"temp\"]",
+						"sparkline": true,
+						"animate": true,
+						"units": "c"
+					}
+				}
+			]
+		},
+		{
+			"title": "Logic Graph",
+			"width": 1,
+			"row": {
+				"3": 15,
+				"4": 15
+			},
+			"col": {
+				"3": 2,
+				"4": 2
+			},
+			"col_width": "2",
+			"widgets": [
+				{
+					"type": "text_widget",
+					"settings": {
+						"title": "Switch 1",
+						"size": "regular",
+						"value": "datasources[\"terminal1\"][\"m001\"][\"config\"][\"digital\"][\"output\"][\"1\"]",
+						"sparkline": true,
+						"animate": true
+					}
+				},
+				{
+					"type": "text_widget",
+					"settings": {
+						"title": "Switch 2",
+						"size": "regular",
+						"value": "datasources[\"terminal1\"][\"m001\"][\"config\"][\"digital\"][\"output\"][\"2\"]",
+						"sparkline": true,
+						"animate": true
+					}
+				},
+				{
+					"type": "text_widget",
+					"settings": {
+						"title": "PWM Logic",
+						"size": "regular",
+						"value": "datasources[\"terminal1\"][\"m001\"][\"config\"][\"pwm\"]",
+						"sparkline": true,
+						"animate": true
+					}
+				}
+			]
+		}
+	],
+	"datasources": [
+		{
+			"name": "terminal1",
+			"type": "nx_iot_ds_paho_plugin",
+			"settings": {
+				"clientid": "314ebfed-fcbb-8bc7-c03d-bae866662336",
+				"server": "mqtt.codeunbug.com",
+				"port": 80,
+				"use_ssl": false,
+				"topic": "m001/#",
+				"user": "rxkyknky",
+				"password": "9-KgEzIl7Uyc",
+				"name": "terminal1"
+			}
+		},
+		{
+			"name": "clock",
+			"type": "clock",
+			"settings": {
+				"refresh": 1
+			}
+		}
+	],
+	"columns": 3
+}

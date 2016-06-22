@@ -1,0 +1,85 @@
+body{
+	position: relative;
+	margin-top: 0px; /*สั่งห่างจากขอบบน*/
+	background-color: #101214;
+}
+#edit{
+	width: 960px;
+	margin-left: auto;
+    margin-right: auto;
+	background-color: #313131;
+	/*border: solid red;*/
+	top:0px;
+}
+.head_web{
+	background-color: #313131;
+	border-bottom: solid black;
+	box-shadow: 2px 2px 10px black;
+}
+#edit>.flex-container>.leftbar>.head{
+	margin: 15px;
+	padding: 10px;
+	font-weight: bold;
+	font-size: 30px;
+	color: #D3D4D4;
+	border:#D3D4D4 solid;
+
+}
+.flex-container{
+	display: flex; /*เริ่มใช้ flex*/
+	flex-direction: row; /* ค่า default จะเป็น row  เรียงแนวนอน*/
+	flex-wrap: wrap;
+		-webkit-flex-wrap: wrap;
+	color: #AE8850;
+	margin-left: auto;
+    margin-right: auto;
+}
+.head{
+	flex-grow: 1;/*ขนาดความกว้างถ้าเทียบกับอีกอัน*/
+	width: 150px;
+}
+.leftbar{
+	padding: 15px;
+	flex-grow: 1;/*ขนาดความกว้างถ้าเทียบกับอีกอัน*/
+}
+.rightbar{
+	padding: 15px;
+	flex-grow: 1;/*ขนาดความกว้างถ้าเทียบกับอีกอัน*/
+}
+#edit_web{  /*ตรงปุ่ม*/
+	text-align: center;
+}
+.test{
+	display: flex; /*เริ่มใช้ flex*/
+	flex-direction: row; /* ค่า default จะเป็น row  เรียงแนวนอน*/
+	flex-wrap: wrap;
+		-webkit-flex-wrap: wrap;
+	/*border:#D3D4D4 solid;*/
+}
+
+.flex-container_web{
+	display: flex; /*เริ่มใช้ flex*/
+	flex-direction: row; /* ค่า default จะเป็น row  เรียงแนวนอน*/
+	flex-wrap: wrap; /*สั่งให้อยู่ในกรอบ*/
+		-webkit-flex-wrap: wrap;
+	color: #AE8850;
+	margin-left: auto;
+    margin-right: auto;
+    /*border: red solid;*/
+   	position: relative;
+   	width: 960px;
+	margin-left: auto;
+    margin-right: auto;
+}
+
+.web_components{
+	padding: 15px;
+	/*border: blue solid;*/
+	width: 220px;  /*ความกว้างของกล่อง*/
+	margin: 5px;
+	height: 100px;
+	flex-grow: 1;/*ขนาดความกว้างถ้าเทียบกับอีกอัน*/
+	position: relative;
+	color: #D3D4D4;
+	background-color: #2a2a2a;
+}

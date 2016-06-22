@@ -1,0 +1,78 @@
+<link rel="import" href="../../../bower_components/polymer/polymer.html">
+<link rel="import" href="../../../bower_components/paper-item/paper-item.html">
+<link rel="import" href="../../../bower_components/iron-icons/iron-icons.html">
+<link rel="import" href="../../../bower_components/paper-icon-button/paper-icon-button.html">
+<link rel="import" href="../../../bower_components/paper-dialog/paper-dialog.html">
+<link rel="import" href="../../../bower_components/paper-button/paper-button.html">
+<link rel="import" href="../../../bower_components/paper-input/paper-input.html">
+<dom-module id="my-item-manu">
+  <style>
+    :host {
+      display: block;
+    }
+    .icon_menu{
+      margin-right: 10px;
+    }
+    .menu{
+      left: 0;
+    }
+    .editMenu{
+      position: absolute;
+      right: 0;
+    }
+  </style>
+  <template>
+    <paper-item>
+      <div class="menu">
+        <iron-icon icon="{{data.icon}}" class="icon_menu" title="{{data.name}}"></iron-icon>{{data.name}}
+      </div>
+      <div class="editMenu">
+        <paper-icon-button icon="menu" data-dialog$="{{data.key}}" onclick="clickHandler(event)" title="แก้ไข"></paper-icon-button>
+        <paper-icon-button icon="delete" data-dialog$="{{data.key}}" on-tap="deleteMenu" title="ลบเมนู"></paper-icon-button>
+      </div>
+    </paper-item>
+    <paper-dialog id="{{data.key}}.toggle()">
+      <h2>Edit Menu</h2>
+      <paper-input label="Name" value="{{data.name::input}}"></paper-input>
+      <paper-input label="Icon" value="{{data.icon::input}}"></paper-input>
+      <div class="buttons">
+        <paper-button dialog-dismiss>Decline</paper-button>
+        <paper-button on-tap="updateMenu" dialog-confirm autofocus >Accept</paper-button>
+      </div>
+    </paper-dialog>
+  </template>
+  <script>
+    Polymer({
+      is: "my-item-manu",
+      properties: {
+        testid: {
+          type: String,
+          value: "testd"
+        }
+      },
+      updateMenu: function(){
+        // this.data เพราะดาต้าเราได้ bind เข้ามาใน properties แล้ว
+        return firebase.database().ref('/menus/' + this.data.key).set(this.data);
+      },
+      deleteMenu: function(){
+        return firebase.database().ref('/menus/' + this.data.key).remove();
+      },
+    });
+
+    function clickHandler(e){
+      var button = e.target;
+      while (!button.hasAttribute('data-dialog') && button !== document.body) {
+        button = button.parentElement;
+      }
+      if (!button.hasAttribute('data-dialog')) {
+        return;
+      }
+      var id = button.getAttribute('data-dialog');
+      console.log(id);
+      var dialog = document.getElementById(id);
+      if (dialog) {
+        dialog.open();
+      }
+    }
+  </script>
+</dom-module>

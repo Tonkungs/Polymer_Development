@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Make Web Easy</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="../../../bower_components/webcomponentsjs/webcomponents-lite.js"></script>
+
+  <script src="https://www.gstatic.com/firebasejs/live/3.0/firebase.js"></script>
+  <script>
+    // Initialize Firebase
+    var config = {
+      apiKey: "AIzaSyBO6eU0LVZr0OH25Wd0YtxAu_jc8YDkcX0",
+      authDomain: "yellow-line.firebaseapp.com",
+      databaseURL: "https://yellow-line.firebaseio.com",
+      storageBucket: "yellow-line.appspot.com",
+    };
+    firebase.initializeApp(config);
+  </script>
+
+  <link rel="import" href="app/my-main.html">
+</head>
+<body style="background-color:#CCC; ">
+  <my-main></my-main>
+</body>
+</html>
