@@ -1,0 +1,49 @@
+<link rel="import" href="my-drawer.html">
+<link rel="import" href="my-contents.html">
+<dom-module id="my-app">
+  <style>
+    :host {
+      display: block;
+    }
+  </style>
+  <template>
+    <paper-drawer-panel drawer-width="400px">
+      <paper-scroll-header-panel drawer fixed>
+        <paper-toolbar>
+          <span>ชื่อสัญญา</span>
+        </paper-toolbar>
+        <div>
+          <my-drawer data={{drawers}}></my-drawer>
+        </div>
+      </paper-scroll-header-panel>
+      <paper-scroll-header-panel main fixed>
+        <paper-toolbar>
+          <span>รายละเอียด</span>
+        </paper-toolbar>
+        <div>
+          <my-contents></my-contents>
+        </div>
+      </paper-scroll-header-panel>\
+    </paper-drawer-panel>
+  </template>
+  <script>
+    Polymer({
+      is: "my-app",
+      properties: {
+        drawers: {
+          type: Array,
+          value: function(){
+            return [
+              {id:0 , nameMenu:"Next-Crop"},
+              {id:1 , nameMenu:"Kmutnb"},
+              {id:2 , nameMenu:"(ชื่อสัญญาเริ่มต้น)"}
+            ]
+          }
+        }
+      },
+      ready: function() {
+        // console.log(this.drawer);
+      }
+    });
+  </script>
+</dom-module>

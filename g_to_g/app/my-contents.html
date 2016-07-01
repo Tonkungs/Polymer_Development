@@ -1,0 +1,64 @@
+<dom-module id="my-contents">
+  <style>
+    :host {
+      display: block;
+    }
+    .contents{
+      margin: 10px;
+    }
+    .flex-warp{
+      @apply(--layout-wrap);
+    }
+    .layout-vertical{
+      @apply(--layout-vertical);
+    }
+    .layout-horizontal{
+      @apply(--layout-horizontal);
+    }
+    .flex-end-justified {
+       @apply(--layout-horizontal);
+       @apply(--layout-end-justified);
+     }
+     .flexchild {
+       @apply(--layout-flex);
+     }
+     .flex2child {
+       @apply(--layout-flex-2);
+     }
+    paper-card{
+      width: 600px;
+    }
+  </style>
+  <template>
+    <paper-card class="contents">
+      <div class="card-content">
+        <div class="layout-horizontal">
+          <div class="layout-vertical flex2child">
+            <iron-label>ชื่อสัญญา</iron-label>
+            <paper-input placeholder="ชื่อสัญญา"></paper-input>
+          </div>
+          <div class="flexchild"></div>
+          <div class="layout-vertical flexchild">
+            <iron-label >วันที่</iron-label>
+            <input type="date" data-polyfill="all">
+          </div>
+          <div class="flexchild"></div>
+        </div>
+        <div class="layout-vertical">
+          รายละเอียด
+          <paper-textarea  required mix-rows="5" placeholder="รายละเอียดสัญญา"></paper-textarea>
+        </div>
+        <div class="flex-end-justified">
+          <paper-button raised>บันทึก</paper-button>
+        </div>
+      </div>
+    </paper-card>
+
+  </template>
+  <script>
+    Polymer({
+      is: "my-contents",
+
+    });
+  </script>
+</dom-module>

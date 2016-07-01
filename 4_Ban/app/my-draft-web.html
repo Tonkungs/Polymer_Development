@@ -3,7 +3,6 @@
 <link rel="import" href="../../../bower_components/iron-icons/iron-icons.html">
 <link rel="import" href="../../../bower_components/paper-icon-button/paper-icon-button.html">
 <link rel="import" href="../../../bower_components/paper-button/paper-button.html">
-<link rel="import" href="../../../bower_components/paper-styles/color.html">
 <link rel="import" href="../../../bower_components/paper-fab/paper-fab.html">
 <link rel="import" href="my-item-manu.html">
 <dom-module id="my-draft-web">
@@ -17,10 +16,16 @@
   </style>
   <template>
     <!-- {{testData}}<br>{{menus}} -->
+
+    <!--firebase-collection
+      location="https://yellow-line.firebaseio.com/menus"
+      data="{{menus}}"></firebase-collection-->
+
     <template is="dom-repeat" items="{{menus}}" as="menu">
       <my-item-manu data="{{menu}}"></my-item-manu>
     </template>
-    <paper-fab mini icon="add" id ="menu_add" data-dialog="dialog" on-tap="addMenu"></paper-fab>
+
+    <paper-fab mini icon="add" id ="menu_add" data-dialog="dialog" on-tap="addMenu" title="เพิ่มเมนู"></paper-fab>
   </template>
   <script type="text/javascript">
       Polymer({
@@ -40,16 +45,27 @@
           let datasRef = firebase.database().ref("/menus");
           datasRef.on('value', (snapshot)=>{
             menus = [];
-            let dataEach;
-            snapshot.forEach(function(childSnapshot){
-              dataEach = childSnapshot.val();
-              dataEach.key = childSnapshot.key;
-              menus.push(dataEach);
-            });
-            // menuProps(menus);
-            // console.log(menus);
+            //console.log(snapshot.val());
+            let getData;
+            let testGetData = snapshot.val();
+            for(var key in testGetData){
+              getData = testGetData[key]
+              let getDataSub = [];
+              let subData = testGetData[key].submenus;
+              for(var key2 in subData){
+                getDataSub.push(subData[key2]);
+              }
+              getData.submenus = getDataSub;
+
+              menus.push(testGetData[key]);
+            }
+            //console.log(menus);
             testfn(menus);
           });
+
+
+
+
         },
         addMenu: function(){
           var newPostKey = firebase.database().ref().child('menus').push().key;

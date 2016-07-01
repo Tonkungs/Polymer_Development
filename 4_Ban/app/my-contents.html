@@ -1,0 +1,57 @@
+<!-- import -->
+<link rel="import" href="../../../bower_components/polymer/polymer.html">
+<link rel="import" href="my-gridster.html">
+<link rel="import" href="my-card.html">
+<dom-module id="my-contents">
+  <style>
+    :host {
+      display: block;
+    }
+    .flex-horizontal{
+      @apply(--layout-horizontal);
+      @apply(--layout-wrap);
+       /*@apply(--layout-around-justified);*/
+    }
+    .flex{
+      @apply(--layout-flex);
+    }
+    #pane_add{
+      position: fixed;
+      right: 0;
+      bottom: 0px;
+      margin-bottom: 10px;
+      margin-right: 25px;
+    }
+  </style>
+  <template>
+    <div class="flex-horizontal">
+      <template is="dom-bind">
+       <firebase-collection
+         location="https://yellow-line.firebaseio.com/panes"
+         data="{{panes}}"></firebase-collection>
+       <template is="dom-repeat" items="[[panes]]" as="pane">
+          <my-card data="{{pane}}"></my-card>
+       </template>
+     </template>
+    </div>
+    <paper-fab mini icon="add" id ="pane_add" on-tap="addPane" title="เพิ่มแผ่นงาน"></paper-fab>
+  <!-- <my-gridster></my-gridster> -->
+  </template>
+  <script>
+    Polymer({
+      is: "my-contents",
+        addPane: function(){
+          var newPostKey = firebase.database().ref().child('panes').push().key;
+          var postData = {
+            name:"ดูกราฟ",
+            key:newPostKey
+          };
+          var updates = {};
+              updates['/panes/' + newPostKey] = postData;
+          return firebase.database().ref().update(updates);
+        }
+    });
+
+
+  </script>
+</dom-module>

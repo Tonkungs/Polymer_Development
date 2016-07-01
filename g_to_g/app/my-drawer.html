@@ -1,0 +1,61 @@
+<link rel="import" href="my-menu.html">
+<dom-module id="my-drawer">
+<style>
+paper-button{
+  /*background-color: red;*/
+  width: 30px;
+  height: 30px;
+}
+.flex-end-justified {
+  @apply(--layout-horizontal);
+  @apply(--layout-end-justified);
+}
+#menuAdd{
+  color: #FFF;
+  background-color: green;
+}
+</style>
+<template>
+  <paper-listbox>
+    <template is="dom-repeat" items="{{data}}">
+      <my-menu data="{{item}}" on-delete="_delete"></my-menu>
+    </template>
+  </paper-listbox>
+  <div class="container flex-end-justified">
+    <paper-button raised id="menuAdd" on-tap="addMenu">เพิ่ม</paper-button>
+  </div>
+</template>
+<script>
+Polymer({
+  is: "my-drawer",
+    // ready: function() {
+    // this.splice('data',1,2)
+    //     data  ชื่ออาเรย์
+    //     1 ตัวแรก ตำแหน่งที่ต้องการเริ่มทำ
+    //     2 ตัวหลัง ลบกี่ตัว
+
+  //   this.splice('data',1,1)
+  //   console.log('rr');
+  // },
+  addMenu: function() {
+    // let length = this.data.length;
+    // let index = this.data[this.data.length-1].id;
+    // console.log("จำนวน"+length);
+    // console.log("เลข id : "+index);
+    // console.log(this.data);
+    var nowDateTime=Date.now()
+    this.push('data',{id:nowDateTime,nameMenu:'test'});
+    // var index = this.data.length;
+    // index = 0;
+    // console.log(this.data[this.data.length-1].id);
+  },
+   _delete: function(e){
+      // console.log(e.detail.id);
+      var index = this.data.indexOf(e.detail);
+      console.log('index : '+index);
+      console.log(this.data);
+      this.splice('data', index, 1);
+  }
+});
+</script>
+</dom-module>

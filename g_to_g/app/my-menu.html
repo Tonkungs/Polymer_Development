@@ -1,0 +1,33 @@
+<dom-module id="my-menu">
+  <style>
+    :host {
+      display: block;
+    }
+    .flex-equal-justified {
+      @apply(--layout-horizontal);
+      @apply(--layout-justified);
+    }
+    paper-button{
+      /*background-color: red;*/
+      width: 30px;
+      height: 30px;
+    }
+  </style>
+  <template>
+    <paper-item class="flex-equal-justified">
+      <!-- [[data.id]] -->
+        [[data.nameMenu]]
+      <paper-button raised on-tap="_delete" >ลบ</paper-button>
+
+    </paper-item>
+  </template>
+  <script>
+    Polymer({
+      is: "my-menu",
+      _delete:function(){
+        // console.log(this.data);
+        this.fire('delete',this.data);
+      }
+    });
+  </script>
+</dom-module>

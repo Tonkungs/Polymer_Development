@@ -1,0 +1,40 @@
+<!-- import -->
+<link rel="import" href="../../../bower_components/polymer/polymer.html">
+
+<dom-module id="my-draft-web">
+  <template>
+    {{testData}}<br>{{menus}}
+  </template>
+  <script type="text/javascript">
+      Polymer({
+        is: "my-draft-web",
+        properties: {
+          testData:{
+            type:Object,
+            value: ["testssss"]
+          },
+          menus: {
+            type: Object,
+            value: ["test"]
+          }
+        },
+        ready:function(){
+          let menuProps = this.testfn.bind(this);
+          let menus = [];
+          let datasRef = firebase.database().ref("/menus");
+          datasRef.on('value', (snapshot)=>{
+            snapshot.forEach(function(childSnapshot){
+              menus.push(childSnapshot.val());
+            });
+            menuProps(menus);
+          });
+
+        },
+
+        testfn:function(data){
+          this.menus = data;
+        }
+      });
+
+  </script>
+</dom-module>

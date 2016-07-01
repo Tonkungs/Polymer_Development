@@ -1,5 +1,5 @@
 <link rel="import" href="../../../bower_components/polymer/polymer.html">
-<link rel="import" href="my-item-subMenu.html">
+
 <dom-module id="my-item-manu">
   <style>
 
@@ -23,29 +23,20 @@
   <template>
     <paper-item>
       <div class="menu">
-        <iron-icon icon="{{data.icon}}" class="icon_menu" title="{{data.name}}"></iron-icon>{{data.name}}
+        <iron-icon icon="{{data.icon}}" class="icon_menu" title="{{data.name}}"></iron-icon>{{data.name}}|{{data.submenus.-KKva8l_NkuV5BGeRy5h.icon}}
+        <template is="dom-repeat" items="{{data.submenus}}" as="menu">
+          <span>{{menu.icon}}</span><นี้ไง  <paper-item>
+            <iron-icon icon="{{menu.icon}}" class="icon_menu" title="{{menu.name}}"></iron-icon>{{menu.name}}
+          </paper-item>
+        </template>
+        arra
       </div>
       <div class="editMenu">
         <paper-icon-button icon="icons:add" title="เพิ่มเมนูย่อย" on-tap="addSubmenu" onclick="clickHandlerMenu(event)"></paper-icon-button>
         <paper-icon-button icon="menu" data-dialog$="{{data.key}}" title="แก้ไข" onclick="clickHandlerMenu(event)"></paper-icon-button>
-        <paper-icon-button icon="delete" on-tap="deleteMenu" title="ลบเมนู"></paper-icon-button>
+        <paper-icon-button icon="delete" data-dialog$="{{data.key}}" on-tap="deleteMenu" title="ลบเมนู"></paper-icon-button>
       </div>
     </paper-item>
-    <template is="dom-repeat" items="{{data.submenus}}" as="menu">
-      <!-- <paper-item >
-        <div class="menu subMenu">
-          <iron-icon icon="{{menu.icon}}" class="icon_menu" title="{{menu.name}}"></iron-icon>{{menu.name}}
-          {{menu.key}}
-        </div>
-        <div class="editMenu">
-          <paper-icon-button icon="icons:add" title="เพิ่มเมนูย่อย" on-tap="addSubmenu" onclick="clickHandlerMenu(event)"></paper-icon-button>
-          <paper-icon-button icon="menu" data-dialog$="{{menu.key}}" title="แก้ไข" onclick="clickHandlerMenu(event)"></paper-icon-button>
-          <paper-icon-button icon="delete" on-tap="deleteSubMenu" title="ลบเมนู"></paper-icon-button>
-        </div>
-      </paper-item> -->
-      <!-- {{data.key}} -->
-      <my-item-subMenu idparent="{{data.key}}" data="{{menu}}"></my-item-subMenu>
-    </template>
     <!-- ไดดาล็อกแก้ไขเมนู -->
     <paper-dialog id="{{data.key}}">
       <h2>Edit Menu</h2>
@@ -61,31 +52,41 @@
   <script>
     Polymer({
       is: "my-item-manu",
-
+      properties: {
+        testid: {
+          type: String,
+          value: "testd"
+        },
+        menu:{
+          type: Array,
+          notify: true,
+          value:function () {return[];}
+        }
+      },
       ready: function() {
-        //console.log(this.data);
-        //console.log(this.data.submenus);
+        console.log(this.data);
+        console.log("-");
+        var str = "-KKvHnZgUuXmGiR5MZPT";
+        console.log(this.data.submenus);
       },
       updateMenu: function(){
         // this.data เพราะดาต้าเราได้ bind เข้ามาใน properties แล้ว
-        return firebase.database().ref('/menus/' + this.data.key).set(this.data);
+        return firebase.database().ref('/menus/' + this.data.__firebaseKey__).set(this.data);
       },
       deleteMenu: function(){
-        return firebase.database().ref('/menus/' + this.data.key).remove();
+        return firebase.database().ref('/menus/' + this.data.__firebaseKey__).remove();
       },
-
       addSubmenu: function() {
-        var newPostKey = firebase.database().ref().child('menus/'+this.data.key+'/submenus').push().key;
+        var newPostKey = firebase.database().ref().child('menus/'+this.data.__firebaseKey__+'/submenus').push().key;
         var postData = {
           name:"ทดสอบ",
           icon:"apps",
           key:newPostKey
         };
         var updates = {};
-        updates['/menus/'+this.data.key +'/submenus/'+ newPostKey] = postData;
+        updates['/menus/'+this.data.__firebaseKey__ +'/submenus/'+ newPostKey] = postData;
         return firebase.database().ref().update(updates);
       }
-
     });
 
     function clickHandlerMenu(e){

@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <link rel="import" href="../../../bower_components/polymer/polymer.html">
+    <title></title>
+  </head>
+  <body>
+    <simple-menu></simple-menu>
+  </body>
+</html>
+
+<dom-module id="simple-menu">
+
+  <template>
+    <template is="dom-repeat" id="menu" items="{{menuItems}}">
+        <div>
+          <span>{{item.name}}</span>
+          <span>{{item.ordered}}</span>
+          <button on-click="order">Order</button>
+        </div>
+    </template>
+  </template>
+
+  <script>
+    Polymer({
+      is: 'simple-menu',
+      ready: function() {
+        this.menuItems = [
+            { name: "Pizza", ordered: 0 },
+            { name: "Pasta", ordered: 0 },
+            { name: "Toast", ordered: 0 }
+        ];
+      },
+      order: function(e) {
+        var model = e.model;
+        model.set('item.ordered', model.item.ordered+1);
+      }
+    });
+  </script>
+
+</dom-module>

@@ -1,0 +1,88 @@
+<link rel="import" href="../../../bower_components/polymer/polymer.html">
+<dom-module id="my-item-subMenu">
+  <style>
+  .icon_menu{
+    margin-right: 10px;
+  }
+  .menu{
+    left: 0;
+  }
+  .editMenu{
+    position: absolute;
+    right: 0;
+  }
+  .editMenu>paper-icon-button{
+    margin-top: 7px;
+    width: 30px;
+    height: 30px;
+    /*background-color: red;*/
+  }
+  paper-item >div.subMenu{
+    margin-left: 20px;
+  }
+  </style>
+  <template>
+    <paper-item >
+      <div class="menu subMenu">
+        <iron-icon icon="{{data.icon}}" class="icon_menu" title="{{data.name}}"></iron-icon>{{data.name}}
+        <!-- <span>{{idparent}}</span> -->
+      </div>
+      <div class="editMenu">
+        <paper-icon-button icon="menu" data-dialog$="{{data.key}}" title="แก้ไข" onclick="clickHandlerMenu(event)"></paper-icon-button>
+        <paper-icon-button icon="delete" data-dialog$="{{data.key}}" on-tap="deleteSubMenu" title="ลบเมนู"></paper-icon-button>
+      </div>
+    </paper-item>
+    <!-- ไดดาล็อกแก้ไขเมนู -->
+    <paper-dialog id="{{data.key}}">
+      <h2>Edit SubMenu</h2>
+      <paper-input label="Name" value="{{data.name::input}}"></paper-input>
+      <paper-input label="Icon" value="{{data.icon::input}}"></paper-input>
+      <div class="buttons">
+        <paper-button dialog-dismiss>Decline</paper-button>
+        <paper-button on-tap="updateSubMenu" dialog-confirm autofocus >Accept</paper-button>
+      </div>
+    </paper-dialog>
+    <!-- ไดดาล็อกจบแก้ไขเมนู -->
+  </template>
+  <script>
+    Polymer({
+      is: "my-item-subMenu",
+      addSubmenu: function() {
+        var newPostKey = firebase.database().ref().child('menus/'+this.data.key+'/submenus').push().key;
+        var postData = {
+          name:"ทดสอบ",
+          icon:"apps",
+          key:newPostKey
+        };
+        var updates = {};
+        updates['/menus/'+this.data.key +'/submenus/'+ newPostKey] = postData;
+        return firebase.database().ref().update(updates);
+      },
+      updateSubMenu: function(){
+        // this.data เพราะดาต้าเราได้ bind เข้ามาใน properties แล้ว
+        return firebase.database().ref('/menus/' + this.idparent +'/submenus/'+ this.data.key).set(this.data);
+      },
+      deleteSubMenu: function(){
+        // console.log(this.idparent);
+        return firebase.database().ref('/menus/' + this.idparent +'/submenus/'+ this.data.key).remove();
+      }
+    });
+
+    function clickHandlerMenu(e){
+      // console.log('menu');
+      var button = e.target;
+      while (!button.hasAttribute('data-dialog') && button !== document.body) {
+        button = button.parentElement;
+      }
+      if (!button.hasAttribute('data-dialog')) {
+        return;
+      }
+      var id = button.getAttribute('data-dialog');
+      // console.log(document.getElementById(id));
+      var dialog = document.getElementById(id);
+      if (dialog) {
+        dialog.open();
+      }
+    }
+  </script>
+</dom-module>

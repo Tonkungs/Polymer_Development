@@ -1,0 +1,24 @@
+<dom-module id="bar-chart">
+  <style>
+    :host {
+      display: block;
+    }
+    google-chart {
+      height: 250px;
+      width: 18em;
+    }
+  </style>
+  <template>
+      <span>test bar-chart ||  {{data.name}}</span>
+      <google-chart
+           type="column"
+           options='{"title": "Bar height", "legend": "none"}'
+           data="{{data.setting.url}}">
+     </google-chart>
+  </template>
+  <script>
+    Polymer({
+      is: "bar-chart",
+    });
+  </script>
+</dom-module>

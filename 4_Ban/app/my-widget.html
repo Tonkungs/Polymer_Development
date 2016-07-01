@@ -1,0 +1,25 @@
+<link rel="import" href="chart/bar-chart.html">
+<dom-module id="my-widget">
+  <style>
+    :host {
+      display: block;
+    }
+    google-chart {
+      height: 250px;
+      width: 18em;
+    }
+  </style>
+  <template>
+    <template is="dom-repeat" items="{{data.components}}" as="components">
+      <bar-chart data="{{components}}"></bar-chart>
+    </template>
+  </template>
+  <script>
+    Polymer({
+      is: "my-widget",
+      _actionIsLogin: function(action) {
+        return action === 'chart';
+      }
+    });
+  </script>
+</dom-module>
