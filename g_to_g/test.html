@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <link rel="import" href="elements.html">
+    <title></title>
+  </head>
+  <body>
+
+    <dom-module id="global-test">
+      <script>
+        Polymer({
+          is: "global-test",
+          properties: {
+            testData: {
+              type: String,
+              notify:true
+            }
+          },
+          testFunGlobal:function(data){
+            console.log(data);
+            this.testData = data;
+          }
+        });
+      </script>
+    </dom-module>
+
+    <dom-module id="manage-box">
+      <template>
+        {{dataBox}}
+      </template>
+      <script>
+        Polymer({
+          is: "manage-box"
+        });
+      </script>
+    </dom-module>
+
+
+    <dom-module id="list-item">
+      <template>
+        <button on-tap="testFun">click</button>
+
+      </template>
+      <script>
+        Polymer({
+          is: "list-item",
+          properties: {
+            dataItem: {
+              type: String
+            }
+          },
+          testFun:function(){
+            this.testza = document.getElementById('test');
+            this.testza.testFunGlobal(this.dataItem);
+          }
+        });
+      </script>
+    </dom-module>
+
+    <dom-module id="list-group">
+      <template>
+aa
+        <global-test id="test" test-data="{{dataItemGroup}}"></global-test>
+ee
+        <manage-box data-box="[[dataItemGroup]]"></manage-box><br>
+      f
+        <list-item data-item="ABC"></list-item>
+        <list-item data-item="DEF"></list-item>
+
+      </template>
+      <script>
+        Polymer({
+          is: "list-group",
+          properties: {
+            dataItemGroup: {
+              type: String
+            }
+          }
+        });
+      </script>
+    </dom-module>
+
+    <list-group></list-group>
+
+
+  </body>
+</html>

@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+
+    <script src="http://www.polymer-project.org/1.0/samples/components/webcomponentsjs/webcomponents-lite.js"></script>
+    <!--
+    <link rel="import" href="http://www.polymer-project.org/1.0/samples/components/polymer/polymer.html">
+    -->
+    <link rel="import" href="https://rawgit.com/Polymer/polymer/master/polymer.html">
+  </head>
+  <body>
+    <template is="dom-bind" id="root">
+      <h3>Bug for the first array item (index 0)</h3>
+      <p>The bug seems to be in the set method of Polymer <a target="_blank" href="https://github.com/Polymer/polymer/blob/master/src/standard/notify-path.html">notify-path.html</a>.
+      <br>It should be easy to fix; the <strong>if (key)</strong> replaced by <strong>if (key !== undefined)</strong> enables setting index 0 items.</p>
+      <p><a target="_blank" href="http://codepen.io/mikkokam/pen/YXLgad?editors=101">Test the fix.</a></p>
+      <div>
+        <button type="button" on-click="changeItem0">Change item #0</button>
+        <button type="button" on-click="changeItem1">Change item #1</button>
+        <button type="button" on-click="changeItem3">Change item #3</button>
+        <button type="button" on-click="addItem">Add new</button>
+        <button type="button" on-click="dumpItems">Dump to console</button>
+      </div>
+      <template is="dom-repeat" items="{{list}}">
+        <div>{{item.name}}</div>
+      </template>
+    </template>
+    <script>
+      "use strict";
+      var root = document.querySelector("#root");
+
+      // The external data, SSOT:
+      root.list = [
+        { name: "initial value for a" },
+        { name: "initial value for b" },
+        { name: "initial value for c" },
+        { name: "initial value for d" }
+        ];
+
+
+      root.changeItem0 = function(id) {
+        root.set("list.0", {name: "changed a"});
+      };
+      root.changeItem1 = function(id) {
+        root.set("list.1", {name: "changed b"});
+      };
+      root.changeItem3 = function(id) {
+        root.set("list.3", {name: "changed d"});
+      };
+
+      root.addItem = function() {
+        root.push("list", {name: 'a new one'})
+      };
+      root.dumpItems = function() {
+        console.log(root.list);
+      };
+    </script>
+  </body>
+</html>

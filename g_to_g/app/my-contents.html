@@ -30,35 +30,60 @@
     }
   </style>
   <template>
-    <paper-card class="contents">
-      <div class="card-content">
-        <div class="layout-horizontal">
-          <div class="layout-vertical flex2child">
-            <iron-label>ชื่อสัญญา</iron-label>
-            <paper-input placeholder="ชื่อสัญญา"></paper-input>
+      <paper-card class="contents">
+        <div class="card-content">
+          <div class="layout-horizontal">
+            <div class="layout-vertical flex2child">
+              <iron-label>ชื่อสัญญา</iron-label>
+              <paper-input placeholder="ชื่อสัญญา" value="[[dataxx.nameMenu]]" id="nameMenu"></paper-input>
+              <!-- {{dataxx.nameMenu}} -->
+              <!-- <input type="input" name="name" value="{{dataxx.nameMenu}}"> -->
+              <button type="button" name="button" on-tap="dddd">กด</button>
+            </div>
+            <div class="flexchild"></div>
+            <div class="layout-vertical flexchild">
+              <iron-label >วันที่</iron-label>
+              <input type="date" data-polyfill="all">
+            </div>
+            <div class="flexchild"></div>
           </div>
-          <div class="flexchild"></div>
-          <div class="layout-vertical flexchild">
-            <iron-label >วันที่</iron-label>
-            <input type="date" data-polyfill="all">
+          <div class="layout-vertical">
+            <iron-label>รายละเอียด</iron-label>
+          <paper-textarea  required mix-rows="5" placeholder="รายละเอียดสัญญา" value="[[dataxx.detail]]" id="promise"></paper-textarea>
           </div>
-          <div class="flexchild"></div>
+          <div class="flex-end-justified">
+            <paper-button raised on-tap="saveData">บันทึก</paper-button>
+          </div>
         </div>
-        <div class="layout-vertical">
-          รายละเอียด
-          <paper-textarea  required mix-rows="5" placeholder="รายละเอียดสัญญา"></paper-textarea>
-        </div>
-        <div class="flex-end-justified">
-          <paper-button raised>บันทึก</paper-button>
-        </div>
-      </div>
-    </paper-card>
+      </paper-card>
 
   </template>
   <script>
     Polymer({
       is: "my-contents",
+      properties: {
+        dataxx: {
+          type: Object,
+          notify:false
+        }
+      },
+      dddd: function () {
+        // this.dataxx.nameMenu='dddd';
+        console.log(this.dataxx.nameMenu);
+      },
+      attached: function() {
+        this.data1 = document.getElementById('data1');
 
+        // let detail = document.getElementById('id')
+      },
+      saveData:function(){
+        let name = this.$.nameMenu.value;
+        // console.log(name);
+        let promise = this.$.promise.value;
+        // console.log(promise);
+        // console.log(this.dataxx.id);
+        this.data1.save(this.dataxx,name,promise);
+      }
     });
   </script>
 </dom-module>

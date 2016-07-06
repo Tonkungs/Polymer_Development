@@ -1,0 +1,47 @@
+<dom-module id="global-data">
+  <template>
+    <button type="button" name="button" on-tap="checkdata">check data</button>
+        <span>{{drawers.0.nameMenu}}</span>
+    <!-- <paper-input label="Input label" value="{{drawers.0.nameMenu}}"></paper-input> -->
+  </template>
+  <script>
+    Polymer({
+      is: "global-data",
+      properties: {
+        drawers: {
+          type: Object,
+          notify: true,
+          value: [
+              {id:0 , nameMenu:"Next-Crop",date:"",detail:"รายละเอียด 0"},
+              {id:1 , nameMenu:"Kmutnb",date:"",detail:"รายละเอียด 1"},
+              {id:2 , nameMenu:"(ชื่อสัญญาเริ่มต้น)",date:"",detail:"รายละเอียด 2"}
+            ]
+        },
+        dataList:{
+          type: Object,
+          notify:true
+        }
+      },
+      checkdata:function(){
+        console.log(this.drawers);
+      },
+      globaldata:function(data){
+          // console.log(data);
+          this.dataList=data;
+      },
+      save:function(id,name,promise){
+        // console.log(id);
+        var index = this.drawers.indexOf(id);
+        // this.drawers[id].nameMenu = name;
+        var change = {id:index , nameMenu:name,date:"",detail:promise};
+        this.splice('drawers',index,1,change);
+        // console.log(this.drawers);
+        // this.drawers[id].nameMenu = name;
+        // this.notifyPath('this.drawers[id].nameMenu',this.drawers[id].nameMenu);
+        // this.drawers[id].detail = promise;
+        // this.notifyPath('this.drawers[id].detail',this.drawers[id].detail);
+
+      }
+    });
+  </script>
+</dom-module>

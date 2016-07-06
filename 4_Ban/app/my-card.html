@@ -112,8 +112,10 @@
       },
       __selected: function(selection) {
         var set = Polymer.dom(this.root).querySelector('#setting_data');
+        console.log(set);
         if (true) {
-          set.removeChild(set.r);
+          console.log(1);
+          set.removeChild(set.childNodes[0]);
         }
           if (selection === 0) {
             var cre_em = document.createElement(this.menuItems[0].nameTag);

@@ -18,7 +18,7 @@ paper-button{
 <template>
   <paper-listbox>
     <template is="dom-repeat" items="{{data}}">
-      <my-menu data="{{item}}" on-delete="_delete"></my-menu>
+      <my-menu data="{{item}}" on-deleteatb="_delete" datas="{{data2}}" ></my-menu>
     </template>
   </paper-listbox>
   <div class="container flex-end-justified">
@@ -28,6 +28,21 @@ paper-button{
 <script>
 Polymer({
   is: "my-drawer",
+  properties: {
+    data:{
+      type: Object,
+      notify:false
+    },
+    data2: {
+      type: Object,
+      notify: true
+    }
+  },
+  // ready: function() {
+  //   this.globalData= document.getElementById('data1');
+  //   console.log(document.getElementById('data1'));
+  // },
+
     // ready: function() {
     // this.splice('data',1,2)
     //     data  ชื่ออาเรย์
@@ -38,13 +53,15 @@ Polymer({
   //   console.log('rr');
   // },
   addMenu: function() {
+    // console.log("เพิ่มเมนู");
+    // console.log(this.data2);
     // let length = this.data.length;
     // let index = this.data[this.data.length-1].id;
     // console.log("จำนวน"+length);
     // console.log("เลข id : "+index);
     // console.log(this.data);
     var nowDateTime=Date.now()
-    this.push('data',{id:nowDateTime,nameMenu:'test'});
+    this.push('data',{id:nowDateTime,nameMenu:'(ชื่อสัญญาเริ่มต้น)',date:"",detail:"รายละเอียด 1dd"});
     // var index = this.data.length;
     // index = 0;
     // console.log(this.data[this.data.length-1].id);
@@ -52,8 +69,8 @@ Polymer({
    _delete: function(e){
       // console.log(e.detail.id);
       var index = this.data.indexOf(e.detail);
-      console.log('index : '+index);
-      console.log(this.data);
+      // console.log('index : '+index);
+      // console.log(this.data);
       this.splice('data', index, 1);
   }
 });

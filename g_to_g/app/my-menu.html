@@ -6,6 +6,7 @@
     .flex-equal-justified {
       @apply(--layout-horizontal);
       @apply(--layout-justified);
+
     }
     paper-button{
       /*background-color: red;*/
@@ -14,9 +15,9 @@
     }
   </style>
   <template>
-    <paper-item class="flex-equal-justified">
+    <paper-item on-tap="getdata" class="flex-equal-justified">
       <!-- [[data.id]] -->
-        [[data.nameMenu]]
+        {{data.nameMenu}}
       <paper-button raised on-tap="_delete" >ลบ</paper-button>
 
     </paper-item>
@@ -24,9 +25,30 @@
   <script>
     Polymer({
       is: "my-menu",
+      properties: {
+        data:{
+          type: Object,
+          notify:false
+        },
+        datas: {
+          type: Object,
+          notify: true
+        }
+      },
+      attached: function() {
+        this.globalData= document.getElementById('data1');
+          // console.log(document.getElementById('data1'));
+      },
+      getdata:function() {
+        // console.log(this.data);
+        // เป็นการคัดลอกดาดต้าเพื่อป้องการเข้าไปแก้ไขข้อมูลใน เรเฟอเรน
+        // const test = JSON.parse(JSON.stringify(this.data));
+        this.globalData.globaldata(this.data)
+        // console.log(this.globalData);
+      },
       _delete:function(){
         // console.log(this.data);
-        this.fire('delete',this.data);
+        this.fire('deleteatb',this.data);
       }
     });
   </script>
