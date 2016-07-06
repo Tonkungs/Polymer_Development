@@ -2,17 +2,12 @@
 <link rel="import" href="../../../bower_components/polymer/polymer.html">
 <!-- <link rel="import" href="my-gridster.html"> -->
 <link rel="import" href="my-widget.html">
-<link rel="import" href="setting/setting-text.html">
-<link rel="import" href="setting/setting-picture.html">
-<link rel="import" href="setting/setting-html.html">
-<link rel="import" href="setting/setting-google-map.html">
-<link rel="import" href="setting/setting-chart-basic.html">
+<link rel="import" href="my-card-edit.html">
+<!-- <link rel="import" href="chart/bar-chart.html"> -->
+
 
 <dom-module id="my-card">
   <style>
-    :host {
-      display: block;
-    }
     paper-card {
       margin: 10px;
       min-height: 150px;
@@ -36,11 +31,7 @@
     .setting_card_pane{
       float: right;
     }
-    .setting_card_pane>paper-icon-button{
-      margin-bottom: 5px;
-      width: 35px;
-      height: 35px;
-    }
+
     paper-dialog {
       min-width: 310px;
       min-height: 200px;
@@ -51,49 +42,17 @@
     <paper-card class="card_main card_main_1">
       <div class="card-header">{{data.name}}
           <div class="setting_card_pane">
-            <paper-icon-button icon="icons:add" title="เพิ่มข้อมูล" onclick="clickHandlerComponent(event)" data-dialog-component$="add_comp_{{data.__firebaseKey__}}" pane="addPane"></paper-icon-button>
-            <paper-icon-button icon="icons:build" title="แก้ไขการ์ด" onclick="clickHandlerComponent(event)" data-dialog-component$="edit_card_{{data.__firebaseKey__}}" pane="editPane"></paper-icon-button>
-            <paper-icon-button icon="icons:delete" title="ลบการ์ด" on-tap="deletePane"></paper-icon-button>
+            <my-card-edit data="{{data}}"></my-card-edit>
           </div>
       </div>
       <div class="card-content">
-        <div id="testcc"></div>
-        <h4>[[data.__firebaseKey__]]</h4>
+        <template is="dom-repeat" items="{{data.components}}">
+              <my-widget data="{{item}}"></my-widget>
+          </template>
+        <!-- <h4>[[data.__firebaseKey__]]</h4> -->
       </div>
   </paper-card>
-  <!-- เพิ่ม pane -->
-  <paper-dialog id="add_comp_{{data.__firebaseKey__}}" addPane>
-    <h2>Add Component</h2>
-    <paper-dropdown-menu label="Component">
-      <paper-listbox selected="{{selection}}" class="dropdown-content">
-        <paper-item>Text</paper-item>
-        <paper-item>Picture</paper-item>
-        <paper-item>Html</paper-item>
-        <paper-item>Chart</paper-item>
-        <paper-item>Google Map</paper-item>
-      </paper-listbox>
-    </paper-dropdown-menu>
-    <div>เลือก : {{selection}}</div>
-    <template is="dom-if" if="1 == {{__selected(selection)}}">
-      <div id="setting_data"><!-- ข้อมูลจะมาเพิ่มตรงนี้ --></div>
-    </template>
-    <div class="buttons">
-      <paper-button dialog-dismiss>Decline</paper-button>
-      <paper-button on-tap="addelements" dialog-confirm autofocus >Accept</paper-button>
-    </div>
-  </paper-dialog>
-    <!-- จบเพิ่ม pane -->
-    <!-- แก้ไข pane -->
-  <paper-dialog id="edit_card_{{data.__firebaseKey__}}" editPane>
-    <h2>Edit Menu</h2>
-    <paper-input label="Name" value="{{data.name::input}}"></paper-input>
-    <paper-input label="ID Pane" value="{{data.__firebaseKey__::input}}"></paper-input>
-    <div class="buttons">
-      <paper-button dialog-dismiss>Decline</paper-button>
-      <paper-button on-tap="updataPane" dialog-confirm autofocus >Accept</paper-button>
-    </div>
-  </paper-dialog>
-  <!-- จบแก้ไข pane -->
+
 </template>
 
   <script>
@@ -103,93 +62,19 @@
           myModule:{
               type:String,
               value:'my-widget'
-          },
-          myYag:{
-            type: Array,
-            notify: true,
-            value:function () { return []; }// ประกาศค่า deflat
           }
-      },
-      __selected: function(selection) {
-        var set = Polymer.dom(this.root).querySelector('#setting_data');
-        console.log(set);
-        if (true) {
-          console.log(1);
-          set.removeChild(set.childNodes[0]);
-        }
-          if (selection === 0) {
-            var cre_em = document.createElement(this.menuItems[0].nameTag);
-            set.appendChild(cre_em);
-          }else if (selection === 1) {
-            var cre_em = document.createElement(this.menuItems[1].nameTag);
-            set.appendChild(cre_em);
-          }else if (selection === 2) {
-            var cre_em = document.createElement(this.menuItems[2].nameTag);
-            set.appendChild(cre_em);
-          }else if (selection === 3) {
-            //ชี้ไปที่อาเรย์ที่ 3
-            var cre_em = document.createElement(this.menuItems[3].nameTag);
-            set.appendChild(cre_em);
-          }else if (selection === 4) {
-            var cre_em = document.createElement(this.menuItems[4].nameTag);
-            set.appendChild(cre_em);
-          }
-
-      },
+        },
       ready: function() {
-        //สร้างอิริเมนขึ้นมา
-        // var datas = this.data.components.-keyXX.properties.value;
-        var toLocal = document.createElement(this.myModule);
-        toLocal.data = this.data;
-        Polymer.dom(this.root).querySelector('#testcc').appendChild(toLocal);
-
-        //testxx.innerHTML='<my-widget data="'+this.data+'"></my-widget>';
-        // ใส่ข้อมูลลง array
-        this.menuItems = [
-            { nameTag: "setting-text"},
-            { nameTag: "setting-picture"},
-            { nameTag: "setting-html"},
-            { nameTag: "setting-chart-basic"},
-            { nameTag: "setting-google-map"}
-        ];
+        // //สร้างอิริเมนขึ้นมา
+        // // var datas = this.data.components.-keyXX.properties.value;
+        // var toLocal = document.createElement(this.myModule);
+        // // console.log(this.data);
+        // toLocal.data = this.data;
+        // Polymer.dom(this.root).querySelector('#testcc').appendChild(toLocal);
+        // //
+        // // //testxx.innerHTML='<my-widget data="'+this.data+'"></my-widget>';
+        // console.log(1);
       },
-      addelements: function(){
-          alert("เพิ่มจ้า");
-          alert(this.data.__firebaseKey__)
-      },
-      updataPane: function(){
-        // console.log(this.data.__firebaseKey__);
-          return firebase.database().ref('/panes/' + this.data.__firebaseKey__).set(this.data);
-      },
-      deletePane: function(){
-        return firebase.database().ref('/panes/' + this.data.__firebaseKey__).remove();
-      }
     });
-
-    function clickHandlerComponent(e){
-      var button = e.target;
-      var pane;
-      while (!button.hasAttribute('data-dialog-component') && button !== document.body) {
-
-        button = button.parentElement;
-        // console.log(button);
-        pane = button.getAttribute('pane')
-        // console.log(pane);
-      }
-      if (!button.hasAttribute('data-dialog-component')) {
-        return;
-      }
-      var id = button.getAttribute('data-dialog-component');
-      // var pane = button.getAttribute('pane');
-      // console.log(id);
-      var dialog = document.getElementById(id);
-      var pane = dialog.hasAttribute('addPane');
-      // console.log(pane);
-      // console.log(dialog.hasAttribute('addPane'));
-      // console.log(dialog);
-      if (dialog ) {
-        dialog.open();
-      }
-    }
   </script>
 </dom-module>

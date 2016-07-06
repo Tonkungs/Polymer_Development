@@ -1,0 +1,19 @@
+<dom-module id="my-picture">
+  <style>
+    img {
+      width: 270px;
+      height: auto;
+    }
+  </style>
+  <template>
+    <img src="{{data.setting.url}}" alt="{{data.detail}}" />
+  </template>
+  <script>
+    Polymer({
+      is: "my-picture",
+    ready: function() {
+      // console.log(this.data);
+    },
+    });
+  </script>
+</dom-module>
