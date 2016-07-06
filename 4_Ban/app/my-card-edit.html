@@ -31,9 +31,27 @@
         </paper-listbox>
       </paper-dropdown-menu>
       <div>เลือก : {{selection}}</div>
+      <!-- <paper-dropdown-menu label="Component">
+        <paper-listbox selected="{{selection}}" class="dropdown-content">
+          <paper-item>Text</paper-item>
+          <paper-item>Picture</paper-item>
+          <paper-item>Html</paper-item>
+          <paper-item>Chart</paper-item>
+          <paper-item>Google Map</paper-item>
+        </paper-listbox>
+      </paper-dropdown-menu> -->
+        <!-- <iron-pages role="main" selected="[[__selected(selection)]]" attr-for-selected="name">
+          <setting-text name="settingText"></setting-text>
+          <setting-picture name="settingPicture"></setting-picture>
+          <setting-html name="settingHtml"></setting-html>
+          <setting-google-map name="settingGoogleMap"></setting-google-map>
+          <setting-chart-basic name="settingChartBasic"></setting-chart-basic>
+
+        </iron-pages> -->
       <template is="dom-if" if="1 == {{__selected(selection)}}">
-        <div id="setting_data"><!-- ข้อมูลจะมาเพิ่มตรงนี้ --></div>
+         <div id="setting_data"><div></div></div>
       </template>
+
       <div class="buttons">
         <paper-button dialog-dismiss>Decline</paper-button>
         <paper-button on-tap="addelements" dialog-confirm autofocus >Accept</paper-button>
@@ -59,6 +77,9 @@
           myModule:{
               type:String,
               value:'my-widget'
+          },
+          selection:{
+                type:Number,
           }
       },
       ready: function() {
@@ -72,29 +93,45 @@
         ];
       },
       __selected: function(selection) {
-        // ชี้ไปที่ div setting_data
+        // // ชี้ไปที่ div setting_data
         var set = Polymer.dom(this.root).querySelector('#setting_data');
+        // console.log(set.length);
+        console.log(set.childNodes[0]);
         //สั่งลบ node
         set.removeChild(set.childNodes[0]);
 
           if (selection === 0) {
             var cre_em = document.createElement(this.menuItems[0].nameTag);
-            set.appendChild(cre_em);
           }else if (selection === 1) {
             var cre_em = document.createElement(this.menuItems[1].nameTag);
-            set.appendChild(cre_em);
           }else if (selection === 2) {
             var cre_em = document.createElement(this.menuItems[2].nameTag);
-            set.appendChild(cre_em);
           }else if (selection === 3) {
             //ชี้ไปที่อาเรย์ที่ 3
             var cre_em = document.createElement(this.menuItems[3].nameTag);
-            set.appendChild(cre_em);
           }else if (selection === 4) {
             var cre_em = document.createElement(this.menuItems[4].nameTag);
-            set.appendChild(cre_em);
           }
-
+          set.appendChild(cre_em);
+        // console.log(this.selection);
+            // switch (this.selection) {
+            //   case 0:
+            //     return  this.selection="settingText";
+            //     break;
+            //   case 1:
+            //     return   this.selection="settingPicture";
+            //     break;
+            //   case 2:
+            //       return  this.selection="settingHtml";
+            //     break;
+            //   case 3:
+            //       return this.selection="settingGoogleMap";
+            //     break;
+            //   case 4:
+            //       return this.selection="settingChartBasic";
+            //     break;
+            // }
+            // console.log(this.selection);
       },
       addelements: function(){
           alert("เพิ่มจ้า");
