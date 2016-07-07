@@ -30,7 +30,7 @@
           </template>
         </paper-listbox>
       </paper-dropdown-menu> -->
-      <div>เลือก : {{selection}}</div>
+      <div>เลือก: {{selection}}44</div>
       <paper-dropdown-menu label="Component">
         <paper-listbox selected="{{selection}}" class="dropdown-content">
           <paper-item>Text</paper-item>
@@ -82,7 +82,7 @@
           }
       },
       ready: function() {
-      //เพิ่มอีริเม็นตรงนี้
+          console.log(111);
         this.menuItems = [
             { name:"Text", nameTag: "setting-text"},
             { name:"Picture", nameTag: "setting-picture"},
@@ -96,6 +96,7 @@
         var set = Polymer.dom(this.root).querySelector('#setting_data');
         // console.log(set.length);
         console.log(set.childNodes[0]);
+        console.log(1111);
         //สั่งลบ node
         set.removeChild(set.childNodes[0]);
 

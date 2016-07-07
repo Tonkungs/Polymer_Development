@@ -25,14 +25,11 @@
   </style>
   <template>
     <div class="flex-horizontal">
-      <template is="dom-bind">
-       <firebase-collection
-         location="https://yellow-line.firebaseio.com/panes"
-         data="{{panes}}"></firebase-collection>
-       <template is="dom-repeat" items="[[panes]]" as="pane">
-          <my-card data="{{pane}}"></my-card>
+
+       <template is="dom-repeat" items="[[panes]]">
+          <my-card data="[[item]]"></my-card>
        </template>
-     </template>
+
     </div>
     <paper-fab mini icon="add" id ="pane_add" on-tap="addPane" title="เพิ่มแผ่นงาน"></paper-fab>
   <!-- <my-gridster></my-gridster> -->
@@ -40,6 +37,19 @@
   <script>
     Polymer({
       is: "my-contents",
+      ready: function() {
+        let datasRef = firebase.database().ref("/panes");
+        datasRef.on('value', (snapshot)=>{
+          let testGetData = snapshot.val();
+          let data = [];
+          for(var key in testGetData){
+            data.push(testGetData[key]);
+          }
+          this.panes = data;
+        });
+
+
+      },
         addPane: function(){
           var newPostKey = firebase.database().ref().child('panes').push().key;
           var postData = {

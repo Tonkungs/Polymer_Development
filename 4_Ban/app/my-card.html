@@ -1,10 +1,6 @@
 <!-- import -->
-<link rel="import" href="../../../bower_components/polymer/polymer.html">
-<!-- <link rel="import" href="my-gridster.html"> -->
 <link rel="import" href="my-widget.html">
 <link rel="import" href="my-card-edit.html">
-<!-- <link rel="import" href="chart/bar-chart.html"> -->
-
 
 <dom-module id="my-card">
   <style>
@@ -39,6 +35,7 @@
 
   </style>
   <template>
+    <!-- <test-ironpage></test-ironpage> -->
     <paper-card class="card_main card_main_1">
       <div class="card-header">{{data.name}}
           <div class="setting_card_pane">
@@ -49,7 +46,7 @@
         <template is="dom-repeat" items="{{data.components}}">
               <my-widget data="{{item}}"></my-widget>
           </template>
-        <!-- <h4>[[data.__firebaseKey__]]</h4> -->
+        <h4>[[data.__firebaseKey__]]</h4>
       </div>
   </paper-card>
 
@@ -64,17 +61,9 @@
               value:'my-widget'
           }
         },
-      ready: function() {
-        // //สร้างอิริเมนขึ้นมา
-        // // var datas = this.data.components.-keyXX.properties.value;
-        // var toLocal = document.createElement(this.myModule);
-        // // console.log(this.data);
-        // toLocal.data = this.data;
-        // Polymer.dom(this.root).querySelector('#testcc').appendChild(toLocal);
-        // //
-        // // //testxx.innerHTML='<my-widget data="'+this.data+'"></my-widget>';
-        // console.log(1);
-      },
+        ready: function() {
+          console.log(123);
+        },
     });
   </script>
 </dom-module>
