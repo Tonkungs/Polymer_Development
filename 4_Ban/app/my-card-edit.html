@@ -23,15 +23,15 @@
     <!-- เพิ่ม pane -->
     <paper-dialog id="add_comp_{{data.__firebaseKey__}}" addPane>
       <h2>Add Component</h2>
-      <paper-dropdown-menu label="Component">
+      <!-- <paper-dropdown-menu label="Component">
         <paper-listbox selected="{{selection}}" class="dropdown-content">
           <template is="dom-repeat" items="{{menuItems}}">
             <paper-item>[[item.name]]</paper-item>
           </template>
         </paper-listbox>
-      </paper-dropdown-menu>
+      </paper-dropdown-menu> -->
       <div>เลือก : {{selection}}</div>
-      <!-- <paper-dropdown-menu label="Component">
+      <paper-dropdown-menu label="Component">
         <paper-listbox selected="{{selection}}" class="dropdown-content">
           <paper-item>Text</paper-item>
           <paper-item>Picture</paper-item>
@@ -39,18 +39,17 @@
           <paper-item>Chart</paper-item>
           <paper-item>Google Map</paper-item>
         </paper-listbox>
-      </paper-dropdown-menu> -->
-        <!-- <iron-pages role="main" selected="[[__selected(selection)]]" attr-for-selected="name">
-          <setting-text name="settingText"></setting-text>
-          <setting-picture name="settingPicture"></setting-picture>
-          <setting-html name="settingHtml"></setting-html>
-          <setting-google-map name="settingGoogleMap"></setting-google-map>
-          <setting-chart-basic name="settingChartBasic"></setting-chart-basic>
-
-        </iron-pages> -->
-      <template is="dom-if" if="1 == {{__selected(selection)}}">
+      </paper-dropdown-menu>
+        <iron-pages selected="[[selection]]">
+          <setting-text></setting-text>
+          <setting-picture></setting-picture>
+          <setting-html></setting-html>
+          <setting-google-map></setting-google-map>
+          <setting-chart-basic></setting-chart-basic>
+        </iron-pages>
+      <!-- <template is="dom-if" if="1 == {{__selected(selection)}}">
          <div id="setting_data"><div></div></div>
-      </template>
+      </template> -->
 
       <div class="buttons">
         <paper-button dialog-dismiss>Decline</paper-button>
