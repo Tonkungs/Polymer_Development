@@ -46,7 +46,7 @@
         <template is="dom-repeat" items="{{data.components}}">
               <my-widget data="{{item}}"></my-widget>
           </template>
-        <h4>[[data.__firebaseKey__]]</h4>
+        <h4>[[data.key]]</h4>
       </div>
   </paper-card>
 
@@ -62,7 +62,7 @@
           }
         },
         ready: function() {
-          console.log(123);
+          // console.log(123);
         },
     });
   </script>

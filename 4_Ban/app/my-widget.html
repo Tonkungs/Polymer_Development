@@ -12,44 +12,46 @@
   </style>
   <template>
     <span>ชนิด:{{data.type}}</span>
-
-      <div id="cpn">
-
-
-      </div>
-
-
+    {{selection}}
+      <iron-pages selected="{{selection}}">
+          <my-text data="{{data}}"></my-text>
+          <my-picture data="{{data}}"></my-picture>
+          <my-html data="{{data}}"></my-html>
+          <bar-chart data="{{data}}"></bar-chart>
+          <my-google-map data="{{data}}"></my-google-map>
+      </iron-pages>
   </template>
   <script>
     Polymer({
       is: "my-widget",
       properties: {
-        mycomponents: {
-          type: Array,
-          value: function(){
-            return [
-                { mycomponent:"bar-chart"},
-                { mycomponent:"my-picture"},
-                { mycomponent:"my-text"},
-                { mycomponent:"my-html"},
-                { mycomponent:"my-google-map"}
-            ]}
+        selection: {
+          type: Number,
+          value:0
         }
       },
       ready: function() {
+        console.log(this.data.type);
+        switch (this.data.type) {
+          case 'my-text':
+               this.selection =0;
+            break;
+          case 'my-picture':
+               this.selection =1;
+            break;
+          case 'my-html':
+               this.selection =2;
+            break;
+          case 'bar-chart':
+               this.selection =3;
+            break;
+          case 'my-google-map':
+               this.selection =4;
+            break;
+        }
 
-      // console.log(this.data.type);
-      // let ta = this.data.type;
-      var toLocal = document.createElement(this.data.type);
-      // console.log(toLocal);
-      toLocal.data = this.data;
-      // console.log(toLocal);
-      // console.log(Polymer.dom(this.root).querySelector('#cpn'));
-      // console.log(data);
-      Polymer.dom(this.root).querySelector('#cpn').appendChild(toLocal);
+        // console.log(this.selection);
       }
-
-
     });
   </script>
 </dom-module>

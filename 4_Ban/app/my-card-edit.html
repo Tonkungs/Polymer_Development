@@ -16,20 +16,13 @@
   }
   </style>
   <template>
-    <paper-icon-button icon="icons:add" title="เพิ่มข้อมูล" onclick="clickHandlerComponent(event)" data-dialog-component$="add_comp_{{data.__firebaseKey__}}" pane="addPane"></paper-icon-button>
-    <paper-icon-button icon="icons:build" title="แก้ไขการ์ด" onclick="clickHandlerComponent(event)" data-dialog-component$="edit_card_{{data.__firebaseKey__}}" pane="editPane"></paper-icon-button>
+    <paper-icon-button icon="icons:add" title="เพิ่มข้อมูล" onclick="clickHandlerComponent(event)" data-dialog-component$="add_comp_{{data.key}}" pane="addPane"></paper-icon-button>
+    <paper-icon-button icon="icons:build" title="แก้ไขการ์ด" onclick="clickHandlerComponent(event)" data-dialog-component$="edit_card_{{data.key}}" pane="editPane"></paper-icon-button>
     <paper-icon-button icon="icons:delete" title="ลบการ์ด" on-tap="deletePane"></paper-icon-button>
 
     <!-- เพิ่ม pane -->
-    <paper-dialog id="add_comp_{{data.__firebaseKey__}}" addPane>
+    <paper-dialog id="add_comp_{{data.key}}" addPane>
       <h2>Add Component</h2>
-      <!-- <paper-dropdown-menu label="Component">
-        <paper-listbox selected="{{selection}}" class="dropdown-content">
-          <template is="dom-repeat" items="{{menuItems}}">
-            <paper-item>[[item.name]]</paper-item>
-          </template>
-        </paper-listbox>
-      </paper-dropdown-menu> -->
       <div>เลือก: {{selection}}44</div>
       <paper-dropdown-menu label="Component">
         <paper-listbox selected="{{selection}}" class="dropdown-content">
@@ -47,10 +40,6 @@
           <setting-google-map></setting-google-map>
           <setting-chart-basic></setting-chart-basic>
         </iron-pages>
-      <!-- <template is="dom-if" if="1 == {{__selected(selection)}}">
-         <div id="setting_data"><div></div></div>
-      </template> -->
-
       <div class="buttons">
         <paper-button dialog-dismiss>Decline</paper-button>
         <paper-button on-tap="addelements" dialog-confirm autofocus >Accept</paper-button>
@@ -58,10 +47,10 @@
     </paper-dialog>
       <!-- จบเพิ่ม pane -->
       <!-- แก้ไข pane -->
-    <paper-dialog id="edit_card_{{data.__firebaseKey__}}" editPane>
+    <paper-dialog id="edit_card_{{data.key}}" editPane>
       <h2>Edit Menu</h2>
       <paper-input label="Name" value="{{data.name::input}}"></paper-input>
-      <paper-input label="ID Pane" value="{{data.__firebaseKey__::input}}"></paper-input>
+      <paper-input label="ID Pane" value="{{data.key::input}}"></paper-input>
       <div class="buttons">
         <paper-button dialog-dismiss>Decline</paper-button>
         <paper-button on-tap="updataPane" dialog-confirm autofocus >Accept</paper-button>
@@ -72,77 +61,17 @@
   <script>
     Polymer({
       is: "my-card-edit",
-      properties: {
-          myModule:{
-              type:String,
-              value:'my-widget'
-          },
-          selection:{
-                type:Number,
-          }
-      },
-      ready: function() {
-          console.log(111);
-        this.menuItems = [
-            { name:"Text", nameTag: "setting-text"},
-            { name:"Picture", nameTag: "setting-picture"},
-            { name:"Html", nameTag: "setting-html"},
-            { name:"Chart", nameTag: "setting-chart-basic"},
-            { name:"Google Map", nameTag: "setting-google-map"}
-        ];
-      },
-      __selected: function(selection) {
-        // // ชี้ไปที่ div setting_data
-        var set = Polymer.dom(this.root).querySelector('#setting_data');
-        // console.log(set.length);
-        console.log(set.childNodes[0]);
-        console.log(1111);
-        //สั่งลบ node
-        set.removeChild(set.childNodes[0]);
-
-          if (selection === 0) {
-            var cre_em = document.createElement(this.menuItems[0].nameTag);
-          }else if (selection === 1) {
-            var cre_em = document.createElement(this.menuItems[1].nameTag);
-          }else if (selection === 2) {
-            var cre_em = document.createElement(this.menuItems[2].nameTag);
-          }else if (selection === 3) {
-            //ชี้ไปที่อาเรย์ที่ 3
-            var cre_em = document.createElement(this.menuItems[3].nameTag);
-          }else if (selection === 4) {
-            var cre_em = document.createElement(this.menuItems[4].nameTag);
-          }
-          set.appendChild(cre_em);
-        // console.log(this.selection);
-            // switch (this.selection) {
-            //   case 0:
-            //     return  this.selection="settingText";
-            //     break;
-            //   case 1:
-            //     return   this.selection="settingPicture";
-            //     break;
-            //   case 2:
-            //       return  this.selection="settingHtml";
-            //     break;
-            //   case 3:
-            //       return this.selection="settingGoogleMap";
-            //     break;
-            //   case 4:
-            //       return this.selection="settingChartBasic";
-            //     break;
-            // }
-            // console.log(this.selection);
-      },
       addelements: function(){
           alert("เพิ่มจ้า");
-          alert(this.data.__firebaseKey__)
+          // alert(this.data.key)
       },
       updataPane: function(){
         // console.log(this.data.__firebaseKey__);
-          return firebase.database().ref('/panes/' + this.data.__firebaseKey__).set(this.data);
+          return firebase.database().ref('/panes/' + this.data.key).set(this.data);
       },
       deletePane: function(){
-        return firebase.database().ref('/panes/' + this.data.__firebaseKey__).remove();
+        // console.log(this.data.__firebaseKey__);
+        return firebase.database().ref('/panes/' + this.data.key).remove();
       }
     });
 
