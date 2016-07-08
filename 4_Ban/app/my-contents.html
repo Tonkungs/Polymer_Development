@@ -1,5 +1,4 @@
 <!-- import -->
-<link rel="import" href="../../../bower_components/polymer/polymer.html">
 <!-- <link rel="import" href="my-gridster.html"> -->
 <link rel="import" href="my-card.html">
 <dom-module id="my-contents">
@@ -25,9 +24,9 @@
   </style>
   <template>
     <div class="flex-horizontal">
-     <firebase-collection
+     <!-- <firebase-collection
        location="https://yellow-line.firebaseio.com/panes"
-       data="{{panes}}"></firebase-collection>
+       data="{{panes}}"></firebase-collection> -->
        <template is="dom-repeat" items="[[panes]]">
           <my-card data="[[item]]"></my-card>
        </template>
@@ -39,17 +38,40 @@
   <script>
     Polymer({
       is: "my-contents",
-      // ready: function() {
-      //   let datasRef = firebase.database().ref("/panes");
-      //   datasRef.on('value', (snapshot)=>{
-      //     let testGetData = snapshot.val();
-      //     let data = [];
-      //     for(var key in testGetData){
-      //       data.push(testGetData[key]);
-      //     }
-      //     this.panes = data;
-      //   });
-      // },
+      properties: {
+        pane: {
+          type: Object
+        }
+      },
+      ready: function() {
+        // console.log(this.panes);
+        const testfn = (data) => {
+          this.panes = data;
+        }
+        var newPostKey = firebase.database().ref().child('/panes').push().key;
+        let panes = [];
+        let datasRef = firebase.database().ref("/panes");
+        datasRef.on('value', (snapshot)=>{
+          panes = [];
+          //console.log(snapshot.val());
+          let getData;
+          let testGetData = snapshot.val();
+          for(var key in testGetData){
+            getData = testGetData[key]
+            let getDataSub = [];
+            let subData = testGetData[key].component;
+            for(var key2 in subData){
+              getDataSub.push(subData[key2]);
+            }
+            getData.component = getDataSub;
+
+            panes.push(testGetData[key]);
+          }
+          //console.log(panes);
+          testfn(panes);
+        });
+        // console.log(this.panes);
+      },
         addPane: function(){
           var newPostKey = firebase.database().ref().child('panes').push().key;
           var postData = {

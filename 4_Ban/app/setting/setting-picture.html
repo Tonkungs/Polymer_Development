@@ -15,7 +15,7 @@
       is: "setting-picture",
       addSubcomponent: function() {
         // alert(1);
-        var newPostKey = firebase.database().ref().child('panes/'+this.key+'/components').push().key;
+        var newPostKey = firebase.database().ref().child('panes/'+this.key+'/component').push().key;
         var pic_name = Polymer.dom(this.root).querySelector('#pic_name').value;
         // console.log(aa);
         var pic_url = Polymer.dom(this.root).querySelector('#pic_url').value;
@@ -28,7 +28,7 @@
         };
         // console.log(postData);
         var updates = {};
-        updates['/panes/'+this.key +'/components/'+ newPostKey] = postData;
+        updates['/panes/'+this.key +'/component/'+ newPostKey] = postData;
         return firebase.database().ref().update(updates);
       },
     });

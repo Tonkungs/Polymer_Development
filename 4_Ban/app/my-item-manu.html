@@ -31,20 +31,10 @@
         <paper-icon-button icon="delete" on-tap="deleteMenu" title="ลบเมนู"></paper-icon-button>
       </div>
     </paper-item>
-    <template is="dom-repeat" items="{{data.submenus}}" as="menu">
-      <!-- <paper-item >
-        <div class="menu subMenu">
-          <iron-icon icon="{{menu.icon}}" class="icon_menu" title="{{menu.name}}"></iron-icon>{{menu.name}}
-          {{menu.key}}
-        </div>
-        <div class="editMenu">
-          <paper-icon-button icon="icons:add" title="เพิ่มเมนูย่อย" on-tap="addSubmenu" onclick="clickHandlerMenu(event)"></paper-icon-button>
-          <paper-icon-button icon="menu" data-dialog$="{{menu.key}}" title="แก้ไข" onclick="clickHandlerMenu(event)"></paper-icon-button>
-          <paper-icon-button icon="delete" on-tap="deleteSubMenu" title="ลบเมนู"></paper-icon-button>
-        </div>
-      </paper-item> -->
+    <template is="dom-repeat" items="{{data.submenus}}">
+      
       <!-- {{data.key}} -->
-      <my-item-subMenu idparent="{{data.key}}" data="{{menu}}"></my-item-subMenu>
+      <my-item-subMenu idparent="{{data.key}}" data="{{item}}"></my-item-subMenu>
     </template>
     <!-- ไดดาล็อกแก้ไขเมนู -->
     <paper-dialog id="{{data.key}}">
