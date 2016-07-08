@@ -5,14 +5,32 @@
     }
   </style>
   <template>
-    <paper-input label="Component Name" required always-float-label placeholder="Component Name"></paper-input>
-    <paper-textarea label="Picture Url" required always-float-label placeholder="Picture Url"></paper-textarea multiple>
-
+    <span>key :: [[key]]</span>
+    <paper-input id="pic_name" label="Component Name" required always-float-label placeholder="Component Name"></paper-input>
+    <paper-textarea id="pic_url" label="Picture Url" required always-float-label placeholder="Picture Url"></paper-textarea multiple>
+      <button type="button" name="button" on-tap="addSubcomponent">ffff</button>
   </template>
   <script>
     Polymer({
       is: "setting-picture",
-
+      addSubcomponent: function() {
+        // alert(1);
+        var newPostKey = firebase.database().ref().child('panes/'+this.key+'/components').push().key;
+        var pic_name = Polymer.dom(this.root).querySelector('#pic_name').value;
+        // console.log(aa);
+        var pic_url = Polymer.dom(this.root).querySelector('#pic_url').value;
+        // console.log(ab);
+        var postData = {
+          name:pic_name,
+          setting:{url:pic_url},
+          key:newPostKey,
+          type:"my-picture"
+        };
+        // console.log(postData);
+        var updates = {};
+        updates['/panes/'+this.key +'/components/'+ newPostKey] = postData;
+        return firebase.database().ref().update(updates);
+      },
     });
   </script>
 </dom-module>

@@ -34,15 +34,15 @@
         </paper-listbox>
       </paper-dropdown-menu>
         <iron-pages selected="[[selection]]">
-          <setting-text></setting-text>
-          <setting-picture></setting-picture>
-          <setting-html></setting-html>
-          <setting-google-map></setting-google-map>
-          <setting-chart-basic></setting-chart-basic>
+          <setting-text key="[[key]]"></setting-text>
+          <setting-picture key="[[key]]"></setting-picture>
+          <setting-html key="[[key]]"></setting-html>
+          <setting-google-map key="[[key]]"></setting-google-map>
+          <setting-chart-basic key="[[key]]"></setting-chart-basic>
         </iron-pages>
       <div class="buttons">
         <paper-button dialog-dismiss>Decline</paper-button>
-        <paper-button on-tap="addelements" dialog-confirm autofocus >Accept</paper-button>
+        <paper-button on-tap="addComponent" dialog-confirm autofocus >Accept</paper-button>
       </div>
     </paper-dialog>
       <!-- จบเพิ่ม pane -->
@@ -61,8 +61,8 @@
   <script>
     Polymer({
       is: "my-card-edit",
-      addelements: function(){
-          alert("เพิ่มจ้า");
+      addComponent: function(){
+          alert("เพิ่มจ้าff");
           // alert(this.data.key)
       },
       updataPane: function(){

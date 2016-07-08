@@ -35,16 +35,15 @@
 
   </style>
   <template>
-    <!-- <test-ironpage></test-ironpage> -->
     <paper-card class="card_main card_main_1">
       <div class="card-header">{{data.name}}
           <div class="setting_card_pane">
-            <my-card-edit data="{{data}}"></my-card-edit>
+            <my-card-edit data="{{data}}" key="[[data.key]]"></my-card-edit>
           </div>
       </div>
-      <div class="card-content">
+      <div class="card-content">{{data.components.-KM3ppLJzSPeuHkVuFjl.setting.url}}
         <template is="dom-repeat" items="{{data.components}}">
-              <my-widget data="{{item}}"></my-widget>
+              <my-widget data="{{item}}" ></my-widget>
           </template>
         <h4>[[data.key]]</h4>
       </div>
@@ -60,10 +59,7 @@
               type:String,
               value:'my-widget'
           }
-        },
-        ready: function() {
-          // console.log(123);
-        },
+        }
     });
   </script>
 </dom-module>
