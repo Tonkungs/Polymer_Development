@@ -7,13 +7,15 @@
   </style>
   <template>
     <!-- <img src="http://www.tutor4dev.com/contents/articles/images/000004.png" /> -->
+    <!-- {{link}} -->
     <img src="{{data.setting.url}}"/>
+    <!-- <img src="[[link]]" alt="" /> -->
   </template>
   <script>
     Polymer({
       is: "my-picture",
     ready: function() {
-      // console.log(this.data);
+      // this.link = this.data.setting.url;
     },
     });
   </script>

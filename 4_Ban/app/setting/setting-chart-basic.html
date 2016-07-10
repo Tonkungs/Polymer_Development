@@ -5,14 +5,30 @@
     }
   </style>
   <template>
-    <paper-input label="Component Name" required always-float-label placeholder="Component Name"></paper-input>
-    <paper-textarea label="Json Url" required always-float-label placeholder="Json Url"></paper-textarea multiple>
-
+    <paper-input id="chart_name" label="Component Name" required always-float-label placeholder="Component Name"></paper-input>
+    <paper-textarea id="chart_url" label="Json Url" required always-float-label placeholder="Json Url"></paper-textarea multiple>
+<button type="button" name="button" on-tap="addSubcomponent">ffff</button>
   </template>
   <script>
     Polymer({
       is: "setting-chart-basic",
-
+      addSubcomponent: function() {
+        var newPostKey = firebase.database().ref().child('panes/'+this.key+'/component').push().key;
+        var chart_name = Polymer.dom(this.root).querySelector('#chart_name').value;
+        // console.log(aa);
+        var chart_url = Polymer.dom(this.root).querySelector('#chart_url').value;
+        // console.log(ab);
+        var postData = {
+          name:chart_name,
+          setting:{url:chart_url},
+          key:newPostKey,
+          type:"bar-chart"
+        };
+        // console.log(postData);
+        var updates = {};
+        updates['/panes/'+this.key +'/component/'+ newPostKey] = postData;
+        return firebase.database().ref().update(updates);
+      }
     });
   </script>
 </dom-module>
