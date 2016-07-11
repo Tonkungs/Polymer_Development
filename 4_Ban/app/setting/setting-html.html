@@ -5,14 +5,31 @@
     }
   </style>
   <template>
-    <paper-input label="Component Name" required always-float-label placeholder="Component Name"></paper-input>
-    <paper-textarea label="Html Code" required always-float-label placeholder="Picture Url"></paper-textarea multiple>
-
+    <paper-input id="html_name" label="Component Name" required always-float-label placeholder="Component Name"></paper-input>
+    <paper-textarea id="html_code" label="Html Code" required always-float-label placeholder="Html Code"></paper-textarea multiple>
+      <button type="button" name="button" on-tap="addSubcomponent_html">ffff</button>
   </template>
   <script>
     Polymer({
       is: "setting-html",
-
+        addSubcomponent_html: function() {
+          // alert(1);
+          var newPostKey = firebase.database().ref().child('panes/'+this.key+'/component').push().key;
+          var html_name = Polymer.dom(this.root).querySelector('#html_name').value;
+          // console.log(aa);
+          var html_code = Polymer.dom(this.root).querySelector('#html_code').value;
+          // console.log(ab);
+          var postData = {
+            name:html_name,
+            html_code:html_code,
+            key:newPostKey,
+            type:"my-html"
+          };
+          // console.log(postData);
+          var updates = {};
+          updates['/panes/'+this.key +'/component/'+ newPostKey] = postData;
+          return firebase.database().ref().update(updates);
+        }
     });
   </script>
 </dom-module>

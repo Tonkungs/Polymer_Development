@@ -1,5 +1,8 @@
 <link rel="import" href="chart/bar-chart.html">
+<link rel="import" href="my-components/my-google-map.html">
 <link rel="import" href="my-components/my-picture.html">
+<link rel="import" href="my-components/my-text.html">
+<link rel="import" href="my-components/my-html.html">
 <dom-module id="my-widget">
   <style>
     :host {
@@ -12,7 +15,7 @@
   </style>
   <template>
     <span>ชนิด:{{data.type}}</span>
-    {{data}}
+    <!-- {{data}} -->
       <iron-pages selected="{{selection}}">
           <my-text data="{{data}}"></my-text>
           <my-picture data="{{data}}"></my-picture>

@@ -5,15 +5,33 @@
     }
   </style>
   <template>
-    <paper-input label="Component Name" required always-float-label placeholder="Component Name"></paper-input>
-    <paper-input label="Latitude" required always-float-label placeholder="Latitude"></paper-input>
-    <paper-input label="Longitude" required always-float-label placeholder="Longitude"></paper-input>
-
+    <paper-input id="Map_name" label="Component Name" required always-float-label placeholder="Component Name"></paper-input>
+    <paper-input id="Latitude" label="Latitude" required always-float-label placeholder="Latitude"></paper-input>
+    <paper-input id="Longitude" label="Longitude" required always-float-label placeholder="Longitude"></paper-input>
+      <button type="button" name="button" on-tap="addSubcomponent_map">ffff</button>
   </template>
   <script>
     Polymer({
       is: "setting-google-map",
-
+      addSubcomponent_map: function() {
+        var newPostKey = firebase.database().ref().child('panes/'+this.key+'/component').push().key;
+        var Map_name = Polymer.dom(this.root).querySelector('#Map_name').value;
+        // console.log(aa);
+        var Latitude = Polymer.dom(this.root).querySelector('#Latitude').value;
+        var Longitude = Polymer.dom(this.root).querySelector('#Longitude').value;
+        // console.log(ab);
+        var postData = {
+          name:Map_name,
+          latitude:Latitude,
+          longitude:Longitude,
+          key:newPostKey,
+          type:"my-google-map"
+        };
+        // console.log(postData);
+        var updates = {};
+        updates['/panes/'+this.key +'/component/'+ newPostKey] = postData;
+        return firebase.database().ref().update(updates);
+      }
     });
   </script>
 </dom-module>

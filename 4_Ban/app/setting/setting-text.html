@@ -5,14 +5,31 @@
     }
   </style>
   <template>
-    <paper-input label="Component Name" required always-float-label placeholder="Component Name"></paper-input>
-    <paper-input multiple label="Context" required always-float-label placeholder="Context"></paper-input>
-
+    <paper-input id="text_name" label="Component Name" required always-float-label placeholder="Component Name"></paper-input>
+    <paper-input id="text_box" multiple label="Context" required always-float-label placeholder="Context"></paper-input>
+          <button type="button" name="button" on-tap="addSubcomponent_text">ffff</button>
   </template>
   <script>
     Polymer({
       is: "setting-text",
-
+      addSubcomponent_text: function() {
+        // alert(1);
+        var newPostKey = firebase.database().ref().child('panes/'+this.key+'/component').push().key;
+        var text_name = Polymer.dom(this.root).querySelector('#text_name').value;
+        // console.log(aa);
+        var text_box = Polymer.dom(this.root).querySelector('#text_box').value;
+        // console.log(ab);
+        var postData = {
+          name:text_name,
+          text:text_box,
+          key:newPostKey,
+          type:"my-text"
+        };
+        // console.log(postData);
+        var updates = {};
+        updates['/panes/'+this.key +'/component/'+ newPostKey] = postData;
+        return firebase.database().ref().update(updates);
+      }
     });
   </script>
 </dom-module>
