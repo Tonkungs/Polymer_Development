@@ -109,6 +109,8 @@
       },
       editSubcomponent_text: function() {
         console.log(this.edata);
+        return firebase.database().ref('/panes/' + this.keyparent +'/component/'+ this.data.key).set(this.edata);
+
       }
     });
   </script>

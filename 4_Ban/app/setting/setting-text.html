@@ -50,10 +50,14 @@
       },
       editSubcomponent_text: function() {
         if (this.data != null){
-          this.editdata['text_name']= Polymer.dom(this.root).querySelector('#text_name').value;
-          this.editdata['text_box']= Polymer.dom(this.root).querySelector('#text_box').value;
+          this.editdata['name'] = Polymer.dom(this.root).querySelector('#text_name').value;
+          this.editdata['text'] = Polymer.dom(this.root).querySelector('#text_box').value;
+          this.editdata['type'] = this.data.type;
+          this.editdata['key'] = this.data.key;
           // console.log(this.editdata['text_name']);
           // console.log(this.editdata['text_box']);
+          // console.log(this.editdata['type']);
+          // console.log(this.editdata['key']);
         }
       }
     });
