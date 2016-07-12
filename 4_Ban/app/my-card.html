@@ -16,23 +16,9 @@
       color: #FFF;
       font-size: 1.3em;
     }
-    .flex-horizontal{
-      @apply(--layout-horizontal);
-      @apply(--layout-wrap);
-       /*@apply(--layout-around-justified);*/
-    }
-    .flex{
-      @apply(--layout-flex);
-    }
     .setting_card_pane{
       float: right;
     }
-
-    paper-dialog {
-      min-width: 310px;
-      min-height: 200px;
-    }
-
   </style>
   <template>
     <paper-card class="card_main card_main_1">
@@ -44,8 +30,8 @@
       </div>
       <div class="card-content">
         <template is="dom-repeat" items="{{data.component}}">
-              <my-widget data="{{item}}" ></my-widget>
-          </template>
+          <my-widget data="{{item}}" keyparent="[[data.key]]"></my-widget>
+        </template>
         <h4>[[data.key]]</h4>
       </div>
   </paper-card>

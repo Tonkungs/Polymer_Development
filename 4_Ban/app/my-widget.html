@@ -4,26 +4,28 @@
 <link rel="import" href="my-components/my-text.html">
 <link rel="import" href="my-components/my-html.html">
 <dom-module id="my-widget">
-  <style>
-    :host {
-      display: block;
-    }
-    google-chart {
-      height: 250px;
-      width: 18em;
+  <style include="iron-flex">
+    .sub_icon{
+      width: 35px;
+      height: 35px;
     }
   </style>
   <template>
-    <span>ชนิด:{{data.type}}</span>
-    <!-- {{data}} -->
-      <iron-pages selected="{{selection}}">
-          <my-text data="{{data}}"></my-text>
-          <my-picture data="{{data}}"></my-picture>
-          <my-html data="{{data}}"></my-html>
-          <bar-chart data="{{data}}"></bar-chart>
-          <my-google-map data="{{data}}"></my-google-map>
-      </iron-pages>
-  </template>
+    <div class="layout horizontal justified">
+      <div><span>ชนิด:{{data.key}}</span></div>
+      <div>
+        <paper-icon-button class="sub_icon"icon="icons:delete" title="ลบคอมโพแนน" on-tap="delSubcom"></paper-icon-button>
+      </div>
+    </div>
+      <!-- {{data}} -->
+        <iron-pages selected="{{selection}}">
+            <my-text data="{{data}}"></my-text>
+            <my-picture data="{{data}}"></my-picture>
+            <my-html data="{{data}}"></my-html>
+            <bar-chart data="{{data}}"></bar-chart>
+            <my-google-map data="{{data}}"></my-google-map>
+        </iron-pages>
+    </template>
   <script>
     Polymer({
       is: "my-widget",
@@ -34,6 +36,8 @@
         }
       },
       ready: function() {
+        // console.log(this.keyparent);
+        // console.log(this.data.key);
         // console.log(this.data.type);
         switch (this.data.type) {
           case 'my-text':
@@ -52,8 +56,9 @@
                this.selection =4;
             break;
         }
-
-        // console.log(this.selection);
+      },
+      delSubcom:function (){
+        return firebase.database().ref('/panes/'+ this.keyparent+'/component/'+this.data.key).remove();
       }
     });
   </script>
