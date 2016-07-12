@@ -3,6 +3,7 @@
 <link rel="import" href="my-components/my-picture.html">
 <link rel="import" href="my-components/my-text.html">
 <link rel="import" href="my-components/my-html.html">
+
 <dom-module id="my-widget">
   <style include="iron-flex">
     .sub_icon{
@@ -10,35 +11,57 @@
       height: 35px;
     }
   </style>
-  <template>
-    <div class="layout horizontal justified">
-      <div><span>ชนิด:{{data.key}}</span></div>
+  <template>{{selection}}
+    <div class="layout horizontal">
+      <div class="flex"><span>ชื่อ:{{data.name}}</span></div>
+      <div>
+        <paper-icon-button class="sub_icon" icon="icons:build" title="แก้ไขคอมโพแนน" onclick="clickHandlerComponent(event)" data-dialog-component$="edit_card_{{data.key}}" pane="editPane"></paper-icon-button>
+      </div>
       <div>
         <paper-icon-button class="sub_icon"icon="icons:delete" title="ลบคอมโพแนน" on-tap="delSubcom"></paper-icon-button>
       </div>
     </div>
+    <!-- เริ่ม pane -->
+    <paper-dialog id="edit_card_{{data.key}}" editPane>
+      <h2>Edit Component</h2>
+      <iron-pages selected="[[selection]]">
+        <template is="dom-if" if="[[selection_e(selection)]]">
+          <setting-text data="{{data}}" editdata="{{edata}}"></setting-text>
+        </template>
+        <template is="dom-if" if="[[selection_e(selection)]]">
+          <setting-picture data="{{data}}" editdata="{{edata}}"></setting-picture>
+        </template>
+        <template is="dom-if" if="[[selection_e(selection)]]">
+          <setting-html data="{{data}}" editdata="{{edata}}"></setting-html>
+        </template>
+        <template is="dom-if" if="[[selection_e(selection)]]">
+          <setting-chart-basic data="{{data}}" editdata="{{edata}}"></setting-chart-basic>
+        </template>
+        <template is="dom-if" if="[[selection_e(selection)]]">
+          <setting-google-map data="{{data}}" editdata="{{edata}}"></setting-google-map>
+        </template>
+      </iron-pages>
+      <div class="buttons">
+        <paper-button dialog-dismiss>Decline</paper-button>
+        <paper-button on-tap="editSubcomponent_text" dialog-confirm autofocus >Accept</paper-button>
+      </div>
+    </paper-dialog>
+    <!-- จบ pane -->
       <!-- {{data}} -->
-        <iron-pages selected="{{selection}}">
+
+      <iron-pages selected="{{selection}}">
             <my-text data="{{data}}"></my-text>
             <my-picture data="{{data}}"></my-picture>
             <my-html data="{{data}}"></my-html>
             <bar-chart data="{{data}}"></bar-chart>
             <my-google-map data="{{data}}"></my-google-map>
         </iron-pages>
+        <hr>
     </template>
   <script>
     Polymer({
       is: "my-widget",
-      properties: {
-        selection: {
-          type: Number,
-          value:0
-        }
-      },
       ready: function() {
-        // console.log(this.keyparent);
-        // console.log(this.data.key);
-        // console.log(this.data.type);
         switch (this.data.type) {
           case 'my-text':
                this.selection =0;
@@ -57,8 +80,35 @@
             break;
         }
       },
+      selection_e:function (selection) {
+        // console.log(selection);
+
+        switch (selection) {
+          case 0:
+            return 0 == selection;
+            break;
+          case 1:
+            return 1 == selection;
+            break;
+          case 2:
+            return 2 == selection;
+            break;
+          case 3:
+            return 3 == selection;
+            break;
+          case 4:
+            return 4 == selection;
+            break;
+        }
+      },
       delSubcom:function (){
-        return firebase.database().ref('/panes/'+ this.keyparent+'/component/'+this.data.key).remove();
+        var r = confirm("Do you want to delete component!");
+        if (r == true) {
+            return firebase.database().ref('/panes/'+ this.keyparent+'/component/'+this.data.key).remove();
+        }
+      },
+      editSubcomponent_text: function() {
+        console.log(this.edata);
       }
     });
   </script>

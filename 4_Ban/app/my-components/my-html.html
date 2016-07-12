@@ -1,18 +1,20 @@
 <dom-module id="my-html">
   <style>
-    img {
-      width: 270px;
-      height: auto;
-    }
+
   </style>
   <template>
-    <span>{{data.html_code}}</span>
+    <!-- <span>{{data.html_code}}</span> -->
+    <div class="html"></div>
   </template>
   <script>
     Polymer({
       is: "my-html",
     ready: function() {
-      // this.link = this.data.setting.url;
+      // console.log(this.data.html_code);
+      var html = Polymer.dom(this.root).querySelector('.html');
+      // console.log(asas);
+      html.innerHTML=this.data.html_code;
+      // document.getElementById("html").innerHTML=Date();
     },
     });
   </script>

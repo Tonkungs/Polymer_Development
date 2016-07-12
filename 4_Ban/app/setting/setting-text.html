@@ -1,17 +1,35 @@
 <dom-module id="setting-text">
   <style>
-    :host {
-      display: block;
-    }
   </style>
-  <template>
-    <paper-input id="text_name" label="Component Name" required always-float-label placeholder="Component Name"></paper-input>
-    <paper-input id="text_box" multiple label="Context" required always-float-label placeholder="Context"></paper-input>
+  <template>[[data.key]]
+    <paper-input id="text_name" label="Component Name" required always-float-label placeholder="Component Name" value="{{data.name}}"></paper-input>
+    <paper-input id="text_box" multiple label="Context" required always-float-label placeholder="Context" value="{{data.text}}"></paper-input>
           <button type="button" name="button" on-tap="addSubcomponent_text">ffff</button>
   </template>
   <script>
     Polymer({
       is: "setting-text",
+      properties: {
+        editdata: {
+          type: Array,
+          notify: true,
+          value: function() {return []; }
+        }
+      },
+      observers: [
+        'editSubcomponent_text(data.name)',
+        'editSubcomponent_text(data.text)'
+      ],
+      ready: function() {
+        // console.log(this.editData);
+        // if (this.data != null){
+        //   console.log(this.data.name);
+        //   this.editdata['text_name']= Polymer.dom(this.root).querySelector('#text_name').value;
+        //   this.editdata['text_box']= Polymer.dom(this.root).querySelector('#text_box').value;
+        //   console.log(this.editdata['text_name']);
+        //   console.log(this.editdata['text_box']);
+        // }
+      },
       addSubcomponent_text: function() {
         // alert(1);
         var newPostKey = firebase.database().ref().child('panes/'+this.key+'/component').push().key;
@@ -29,6 +47,14 @@
         var updates = {};
         updates['/panes/'+this.key +'/component/'+ newPostKey] = postData;
         return firebase.database().ref().update(updates);
+      },
+      editSubcomponent_text: function() {
+        if (this.data != null){
+          this.editdata['text_name']= Polymer.dom(this.root).querySelector('#text_name').value;
+          this.editdata['text_box']= Polymer.dom(this.root).querySelector('#text_box').value;
+          // console.log(this.editdata['text_name']);
+          // console.log(this.editdata['text_box']);
+        }
       }
     });
   </script>

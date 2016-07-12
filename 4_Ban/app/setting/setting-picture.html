@@ -13,6 +13,9 @@
   <script>
     Polymer({
       is: "setting-picture",
+      ready: function() {
+        // console.log(this.data);
+      },
       addSubcomponent: function() {
         // alert(1);
         var newPostKey = firebase.database().ref().child('panes/'+this.key+'/component').push().key;
