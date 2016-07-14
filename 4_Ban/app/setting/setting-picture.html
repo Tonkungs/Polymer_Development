@@ -8,10 +8,10 @@
     <span>key :: [[key]]</span>
     <paper-input id="pic_name" label="Component Name" required always-float-label placeholder="Component Name" value="{{data.name}}"></paper-input>
     <paper-textarea id="pic_url" label="Picture Url" required always-float-label placeholder="Picture Url" value="{{data.setting.url}}"></paper-textarea multiple>
-      <button type="button" name="button" on-tap="addSubcomponent">เพิ่ม</button>
       <div class="buttons">
-        <paper-button dialog-dismiss>Decline</paper-button>
-        <paper-button on-tap="editSub_pic" dialog-confirm autofocus >Accept</paper-button>
+        <paper-button dialog-dismiss>ยกเลิก</paper-button>
+        <paper-button on-tap="editSub_pic" dialog-confirm autofocus >แก้ไข</paper-button>
+        <paper-button on-tap="addSubcomponent" dialog-confirm autofocus >ตกลง</paper-button>
       </div>
   </template>
   <script>
@@ -27,26 +27,23 @@
           value:''
         }
       },
-      // observers: [
-      //   'editSub_pic(data.name)',
-      //   'editSub_pic(data.setting.url)'
-      // ],
+      attached: function() {
+        this.datasc = document.getElementById('data-management');
+      },
       addSubcomponent: function() {
-        var newPostKey = firebase.database().ref().child('panes/'+this.key+'/component').push().key;
-        var pic_name = Polymer.dom(this.root).querySelector('#pic_name').value;
-        // console.log(aa);
-        var pic_url = Polymer.dom(this.root).querySelector('#pic_url').value;
-        // console.log(ab);
-        var postData = {
+        let route = 'panes/'+this.key+'/component';
+        let newPostKey = this.datasc.findKey(route);
+        let pic_name = Polymer.dom(this.root).querySelector('#pic_name').value;
+        let pic_url = Polymer.dom(this.root).querySelector('#pic_url').value;
+        let postData = {
           name:pic_name,
           setting:{url:pic_url},
           key:newPostKey,
           type:"my-picture"
         };
-        // console.log(postData);
-        var updates = {};
+        let updates = {};
         updates['/panes/'+this.key +'/component/'+ newPostKey] = postData;
-        return firebase.database().ref().update(updates);
+        this.datasc.addData(updates);
       },
       editSub_pic: function() {
         this.editdata['name'] = Polymer.dom(this.root).querySelector('#pic_name').value;
@@ -55,7 +52,8 @@
         // this.editdata['setting'] = this.url;
         this.editdata['key'] = this.data.key;
         this.editdata['type'] = this.data.type;
-        firebase.database().ref('/panes/' + this.key +'/component/'+ this.data.key).set(this.editdata);
+        let route = '/panes/' + this.key +'/component/'+ this.data.key;
+        this.datasc.editData(route,this.editdata);
       }
     });
   </script>

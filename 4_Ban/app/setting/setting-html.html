@@ -7,11 +7,11 @@
   <template>
     <paper-input id="html_name" label="Component Name" required always-float-label placeholder="Component Name" value={{data.name}}></paper-input>
     <paper-textarea id="html_code" label="Html Code" required always-float-label placeholder="Html Code" value={{data.html_code}}></paper-textarea multiple>
-      <button type="button" name="button" on-tap="addSubcomponent_html">ffff</button>
 
       <div class="buttons">
-        <paper-button dialog-dismiss>Decline</paper-button>
-        <paper-button on-tap="editSub_html" dialog-confirm autofocus >Accept</paper-button>
+        <paper-button dialog-dismiss>ยกเลิก</paper-button>
+        <paper-button on-tap="editSub_html" dialog-confirm autofocus >แก้ไข</paper-button>
+        <paper-button on-tap="addSubcomponent" dialog-confirm autofocus >ตกลง</paper-button>
       </div>
   </template>
   <script>
@@ -20,27 +20,26 @@
       properties: {
         editdata: {
           type: Array,
-          notify: true,
           value: function() {return []; }
         }
       },
-        addSubcomponent_html: function() {
-          // alert(1);
-          var newPostKey = firebase.database().ref().child('panes/'+this.key+'/component').push().key;
-          var html_name = Polymer.dom(this.root).querySelector('#html_name').value;
-          // console.log(aa);
-          var html_code = Polymer.dom(this.root).querySelector('#html_code').value;
-          // console.log(ab);
-          var postData = {
+      attached: function() {
+        this.datasc = document.getElementById('data-management');
+      },
+        addSubcomponent: function() {
+          let route = 'panes/'+this.key+'/component';
+          let newPostKey = this.datasc.findKey(route);
+          let html_name = Polymer.dom(this.root).querySelector('#html_name').value;
+          let html_code = Polymer.dom(this.root).querySelector('#html_code').value;
+          let postData = {
             name:html_name,
             html_code:html_code,
             key:newPostKey,
             type:"my-html"
           };
-          // console.log(postData);
-          var updates = {};
+          let updates = {};
           updates['/panes/'+this.key +'/component/'+ newPostKey] = postData;
-          return firebase.database().ref().update(updates);
+          this.datasc.addData(updates);
         },
         editSub_html: function() {
 
@@ -49,8 +48,10 @@
             this.editdata['key'] = this.data.key;
             this.editdata['type'] = this.data.type;
             // console.log(this.editdata);
-            firebase.database().ref('/panes/' + this.key +'/component/'+ this.data.key).set(this.editdata);
+            let route = '/panes/' + this.key +'/component/'+ this.data.key;
+            this.datasc.editData(route,this.editdata);
         }
+
     });
   </script>
 </dom-module>

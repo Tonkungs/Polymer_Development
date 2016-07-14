@@ -6,17 +6,17 @@
     }
   </style>
   <template>
-    <!-- <img src="http://www.tutor4dev.com/contents/articles/images/000004.png" /> -->
-    <!-- {{link}} -->
-    <img src="{{data.setting.url}}"/>
-    <!-- <img src="[[link]]" alt="" /> -->
+    <template is="dom-if" if="[[checkpic(data.setting.url)]]">
+      <img src="{{data.setting.url}}"/>
+    </template>
   </template>
   <script>
     Polymer({
       is: "my-picture",
-    ready: function() {
-      // this.link = this.data.setting.url;
-    },
+    checkpic:function(pic){
+      return pic != null;
+
+    }
     });
   </script>
 </dom-module>

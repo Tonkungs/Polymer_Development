@@ -10,16 +10,20 @@
   </style>
   <template>
       <span>test bar-chart ||  {{data.name}}</span>
-      <google-chart
-           type="column"
-           options='{"title": "Bar height", "legend": "none"}'
-           data="{{data.setting.url}}">
-     </google-chart>
-
+      <template is="dom-if" if="[[checkChart(data.type)]]">
+          <google-chart
+               type="column"
+               options='{"title": "Bar height", "legend": "none"}'
+               data="{{data.setting.url}}">
+         </google-chart>
+      </template>
   </template>
   <script>
     Polymer({
       is: "bar-chart",
+      checkChart:function (chart){
+        return chart == 'bar-chart';
+      }
     });
   </script>
 </dom-module>

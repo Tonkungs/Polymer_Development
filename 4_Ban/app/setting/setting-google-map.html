@@ -8,10 +8,11 @@
     <paper-input id="Map_name" label="Component Name" required always-float-label placeholder="Component Name" value="{{data.name}}"></paper-input>
     <paper-input id="Latitude" label="Latitude" required always-float-label placeholder="Latitude" value="{{data.latitude}}"></paper-input>
     <paper-input id="Longitude" label="Longitude" required always-float-label placeholder="Longitude" value="{{data.longitude}}"></paper-input>
-      <button type="button" name="button" on-tap="addSubcomponent_map">ffff</button>
+      <!-- <button type="button" name="button" on-tap="addSubcomponent_map">ffff</button> -->
       <div class="buttons">
-        <paper-button dialog-dismiss>Decline</paper-button>
-        <paper-button on-tap="editSub_map" dialog-confirm autofocus >Accept</paper-button>
+        <paper-button dialog-dismiss>ยกเลิก</paper-button>
+        <paper-button on-tap="editSub_map" dialog-confirm autofocus >แก้ไข</paper-button>
+        <paper-button on-tap="addSubcomponent" dialog-confirm autofocus >ตกลง</paper-button>
       </div>
   </template>
   <script>
@@ -20,39 +21,38 @@
       properties: {
         editdata: {
           type: Array,
-          notify: true,
           value: function() {return []; }
         }
       },
-      addSubcomponent_map: function() {
-        var newPostKey = firebase.database().ref().child('panes/'+this.key+'/component').push().key;
-        var Map_name = Polymer.dom(this.root).querySelector('#Map_name').value;
-        // console.log(aa);
-        var Latitude = Polymer.dom(this.root).querySelector('#Latitude').value;
-        var Longitude = Polymer.dom(this.root).querySelector('#Longitude').value;
-        // console.log(ab);
-        var postData = {
+      attached: function() {
+        this.datasc = document.getElementById('data-management');
+      },
+      addSubcomponent: function() {
+        let route = 'panes/'+this.key+'/component';
+        let newPostKey = this.datasc.findKey(route);
+        let Map_name = Polymer.dom(this.root).querySelector('#Map_name').value;
+        let Latitude = Polymer.dom(this.root).querySelector('#Latitude').value;
+        let Longitude = Polymer.dom(this.root).querySelector('#Longitude').value;
+        let postData = {
           name:Map_name,
           latitude:Latitude,
           longitude:Longitude,
           key:newPostKey,
           type:"my-google-map"
         };
-        // console.log(postData);
-        var updates = {};
+        let updates = {};
         updates['/panes/'+this.key +'/component/'+ newPostKey] = postData;
-        return firebase.database().ref().update(updates);
+        this.datasc.addData(updates);
       },
       editSub_map: function() {
-
-          this.editdata['name'] = Polymer.dom(this.root).querySelector('#Map_name').value;
-          this.editdata['latitude'] = Polymer.dom(this.root).querySelector('#Latitude').value;
-          this.editdata['longitude'] = Polymer.dom(this.root).querySelector('#Longitude').value;
-          this.editdata['key'] = this.data.key;
-          this.editdata['type'] = this.data.type;
-          // console.log(this.editdata);
-          firebase.database().ref('/panes/' + this.key +'/component/'+ this.data.key).set(this.editdata);
-      }
+        this.editdata['name'] = Polymer.dom(this.root).querySelector('#Map_name').value;
+        this.editdata['latitude'] = Polymer.dom(this.root).querySelector('#Latitude').value;
+        this.editdata['longitude'] = Polymer.dom(this.root).querySelector('#Longitude').value;
+        this.editdata['key'] = this.data.key;
+        this.editdata['type'] = this.data.type;
+        // console.log(this.editdata);
+        let route = '/panes/' + this.key +'/component/'+ this.data.key;
+        this.datasc.editData(route,this.editdata);}
     });
   </script>
 </dom-module>

@@ -48,7 +48,6 @@
         const testfn = (data) => {
           this.panes = data;
         }
-        var newPostKey = firebase.database().ref().child('/panes').push().key;
         let panes = [];
         let datasRef = firebase.database().ref("/panes");
         datasRef.on('value', (snapshot)=>{
@@ -72,16 +71,31 @@
         });
         // console.log(this.panes);
       },
-        addPane: function(){
-          var newPostKey = firebase.database().ref().child('panes').push().key;
-          var postData = {
-            name:"ดูกราฟ",
-            key:newPostKey
-          };
-          var updates = {};
-              updates['/panes/' + newPostKey] = postData;
-          return firebase.database().ref().update(updates);
-        }
+      attached: function() {
+        this.datasc = document.getElementById('data-management');
+        // this.datam = document.getElementById('301');
+      },
+      findKey:function(route){
+        return newPostKey = firebase.database().ref().child(route).push().key;
+      },
+      addPane: function(){
+        var newPostKey = firebase.database().ref().child('panes').push().key;
+        var postData = {
+          name:"ดูกราฟ",
+          key:newPostKey
+        };
+        var updates = {};
+        updates['/panes/' + newPostKey] = postData;
+        return firebase.database().ref().update(updates);
+      },
+      addData:function(data){
+        firebase.database().ref().update(data);
+      },
+      editData:function(route,data){
+        // console.log(route);
+        // console.log(data);
+        firebase.database().ref(route).set(data);
+      }
     });
 
 

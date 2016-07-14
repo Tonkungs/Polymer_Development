@@ -28,7 +28,7 @@
 
         <setting-text data="{{data}}" key="{{keyparent}}"></setting-text>
         <setting-picture data="{{data}}" key="{{keyparent}}"></setting-picture>
-        <setting-html data="{{data}}" key="{{keyparent}}"></setting-html>
+        <setting-html id ="301" data="{{data}}" key="{{keyparent}}"></setting-html>
         <setting-chart-basic data="{{data}}" key="{{keyparent}}"></setting-chart-basic>
         <setting-google-map data="{{data}}" key="{{keyparent}}"></setting-google-map>
 
@@ -86,29 +86,12 @@
       delSubcom:function (){
         var r = confirm("Do you want to delete component!");
         if (r == true) {
-            return firebase.database().ref('/panes/'+ this.keyparent+'/component/'+this.data.key).remove();
+          this.cc = '/panes/'+ this.keyparent+'/component/'+this.data.key;
+            return firebase.database().ref(this.cc).remove();
         }
       },
       editSubcomponent: function() {
-        // if (this.edata_text != null) {
-        //   console.log(this.edata_text);
-        //   this.edata = this.edata_text;
-        //   console.log(this.edata);
-        // }
-        //  if (this.edata_pic != null) {
-        //   // console.log(111);
-        //   this.edata = this.edata_pic;
-        //   console.log(this.edata);
-        // }
-        //  if (this.edata_html != null) {
-        //   this.edata = this.edata_html;
-        // }
-        //  if (this.edata_chart != null) {
-        //   this.edata = this.edata_chart;
-        // }
-        //  if (this.edata_map != null) {
-        //   this.edata = this.edata_map;
-        // }
+
           console.log(this.keyparent);
         // console.log(this.editdatapic);
         // console.log(this.edata);
