@@ -25,26 +25,18 @@
     <paper-dialog id="edit_card_{{data.key}}" editPane>
       <h2>Edit Component</h2>
       <iron-pages selected="[[selection]]">
-        <template is="dom-if" if="[[selection_e(selection)]]">
-          <setting-text data="{{data}}" editdata="{{edata}}"></setting-text>
-        </template>
-        <template is="dom-if" if="[[selection_e(selection)]]">
-          <setting-picture data="{{data}}" editdata="{{edata}}"></setting-picture>
-        </template>
-        <template is="dom-if" if="[[selection_e(selection)]]">
-          <setting-html data="{{data}}" editdata="{{edata}}"></setting-html>
-        </template>
-        <template is="dom-if" if="[[selection_e(selection)]]">
-          <setting-chart-basic data="{{data}}" editdata="{{edata}}"></setting-chart-basic>
-        </template>
-        <template is="dom-if" if="[[selection_e(selection)]]">
-          <setting-google-map data="{{data}}" editdata="{{edata}}"></setting-google-map>
-        </template>
+
+        <setting-text data="{{data}}" key="{{keyparent}}"></setting-text>
+        <setting-picture data="{{data}}" key="{{keyparent}}"></setting-picture>
+        <setting-html data="{{data}}" key="{{keyparent}}"></setting-html>
+        <setting-chart-basic data="{{data}}" key="{{keyparent}}"></setting-chart-basic>
+        <setting-google-map data="{{data}}" key="{{keyparent}}"></setting-google-map>
+
       </iron-pages>
-      <div class="buttons">
+      <!-- <div class="buttons">
         <paper-button dialog-dismiss>Decline</paper-button>
-        <paper-button on-tap="editSubcomponent_text" dialog-confirm autofocus >Accept</paper-button>
-      </div>
+        <paper-button on-tap="editSubcomponent" dialog-confirm autofocus >Accept</paper-button>
+      </div> -->
     </paper-dialog>
     <!-- จบ pane -->
       <!-- {{data}} -->
@@ -61,7 +53,18 @@
   <script>
     Polymer({
       is: "my-widget",
+      properties: {
+        selection: {
+          type: Number,
+          value: -1
+        },
+        edata: {
+          type: Array,
+          value: function() {return []; }
+        }
+      },
       ready: function() {
+        // console.log(this.selection);
         switch (this.data.type) {
           case 'my-text':
                this.selection =0;
@@ -80,37 +83,38 @@
             break;
         }
       },
-      selection_e:function (selection) {
-        // console.log(selection);
-
-        switch (selection) {
-          case 0:
-            return 0 == selection;
-            break;
-          case 1:
-            return 1 == selection;
-            break;
-          case 2:
-            return 2 == selection;
-            break;
-          case 3:
-            return 3 == selection;
-            break;
-          case 4:
-            return 4 == selection;
-            break;
-        }
-      },
       delSubcom:function (){
         var r = confirm("Do you want to delete component!");
         if (r == true) {
             return firebase.database().ref('/panes/'+ this.keyparent+'/component/'+this.data.key).remove();
         }
       },
-      editSubcomponent_text: function() {
-        console.log(this.edata);
-        return firebase.database().ref('/panes/' + this.keyparent +'/component/'+ this.data.key).set(this.edata);
-
+      editSubcomponent: function() {
+        // if (this.edata_text != null) {
+        //   console.log(this.edata_text);
+        //   this.edata = this.edata_text;
+        //   console.log(this.edata);
+        // }
+        //  if (this.edata_pic != null) {
+        //   // console.log(111);
+        //   this.edata = this.edata_pic;
+        //   console.log(this.edata);
+        // }
+        //  if (this.edata_html != null) {
+        //   this.edata = this.edata_html;
+        // }
+        //  if (this.edata_chart != null) {
+        //   this.edata = this.edata_chart;
+        // }
+        //  if (this.edata_map != null) {
+        //   this.edata = this.edata_map;
+        // }
+          console.log(this.keyparent);
+        // console.log(this.editdatapic);
+        // console.log(this.edata);
+        // firebase.database().ref('/panes/' + this.keyparent +'/component/'+ this.data.key).set(this.edata);
+        // this.edata = [];
+        // console.log(this.edata);
       }
     });
   </script>

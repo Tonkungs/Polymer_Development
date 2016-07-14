@@ -5,13 +5,25 @@
     }
   </style>
   <template>
-    <paper-input id="html_name" label="Component Name" required always-float-label placeholder="Component Name"></paper-input>
-    <paper-textarea id="html_code" label="Html Code" required always-float-label placeholder="Html Code"></paper-textarea multiple>
+    <paper-input id="html_name" label="Component Name" required always-float-label placeholder="Component Name" value={{data.name}}></paper-input>
+    <paper-textarea id="html_code" label="Html Code" required always-float-label placeholder="Html Code" value={{data.html_code}}></paper-textarea multiple>
       <button type="button" name="button" on-tap="addSubcomponent_html">ffff</button>
+
+      <div class="buttons">
+        <paper-button dialog-dismiss>Decline</paper-button>
+        <paper-button on-tap="editSub_html" dialog-confirm autofocus >Accept</paper-button>
+      </div>
   </template>
   <script>
     Polymer({
       is: "setting-html",
+      properties: {
+        editdata: {
+          type: Array,
+          notify: true,
+          value: function() {return []; }
+        }
+      },
         addSubcomponent_html: function() {
           // alert(1);
           var newPostKey = firebase.database().ref().child('panes/'+this.key+'/component').push().key;
@@ -29,6 +41,15 @@
           var updates = {};
           updates['/panes/'+this.key +'/component/'+ newPostKey] = postData;
           return firebase.database().ref().update(updates);
+        },
+        editSub_html: function() {
+
+            this.editdata['name'] = Polymer.dom(this.root).querySelector('#html_name').value;
+            this.editdata['html_code'] = Polymer.dom(this.root).querySelector('#html_code').value;
+            this.editdata['key'] = this.data.key;
+            this.editdata['type'] = this.data.type;
+            // console.log(this.editdata);
+            firebase.database().ref('/panes/' + this.key +'/component/'+ this.data.key).set(this.editdata);
         }
     });
   </script>

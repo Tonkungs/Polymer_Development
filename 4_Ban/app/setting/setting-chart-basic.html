@@ -5,13 +5,24 @@
     }
   </style>
   <template>
-    <paper-input id="chart_name" label="Component Name" required always-float-label placeholder="Component Name"></paper-input>
-    <paper-textarea id="chart_url" label="Json Url" required always-float-label placeholder="Json Url"></paper-textarea multiple>
+    <paper-input id="chart_name" label="Component Name" required always-float-label placeholder="Component Name" value="{{data.name}}"></paper-input>
+    <paper-textarea id="chart_url" label="Json Url" required always-float-label placeholder="Json Url" value="{{data.setting.url}}"></paper-textarea multiple>
 <button type="button" name="button" on-tap="addSubcomponent">ffff</button>
+<div class="buttons">
+  <paper-button dialog-dismiss>Decline</paper-button>
+  <paper-button on-tap="editSub_chart" dialog-confirm autofocus >Accept</paper-button>
+</div>
   </template>
   <script>
     Polymer({
       is: "setting-chart-basic",
+      properties: {
+        editdata: {
+          type: Array,
+          notify: true,
+          value: function() {return []; }
+        }
+      },
       addSubcomponent: function() {
         var newPostKey = firebase.database().ref().child('panes/'+this.key+'/component').push().key;
         var chart_name = Polymer.dom(this.root).querySelector('#chart_name').value;
@@ -28,6 +39,16 @@
         var updates = {};
         updates['/panes/'+this.key +'/component/'+ newPostKey] = postData;
         return firebase.database().ref().update(updates);
+      },
+      editSub_chart: function() {
+
+          this.editdata['name'] = Polymer.dom(this.root).querySelector('#chart_name').value;
+          this.url = Polymer.dom(this.root).querySelector('#chart_url').value;
+          this.editdata['setting'] = {'url' : this.url };
+          this.editdata['key'] = this.data.key;
+          this.editdata['type'] = this.data.type;
+          // console.log(this.editdata);
+          firebase.database().ref('/panes/' + this.key +'/component/'+ this.data.key).set(this.editdata);
       }
     });
   </script>
