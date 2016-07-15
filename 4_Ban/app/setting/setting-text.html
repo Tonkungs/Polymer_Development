@@ -19,9 +19,9 @@
           value: function() {return []; }
         }
       },
+      
       attached: function() {
         this.datasc = document.getElementById('data-management');
-        // this.datam = document.getElementById('301');
       },
       addSubcomponent: function() {
         let route = 'panes/'+this.key+'/component';
@@ -43,14 +43,14 @@
 
       editSub_text: function() {
 
-          this.editdata['name'] = Polymer.dom(this.root).querySelector('#text_name').value;
-          this.editdata['text'] = Polymer.dom(this.root).querySelector('#text_box').value;
-          this.editdata['key'] = this.data.key;
-          this.editdata['type'] = this.data.type;
-          // this.data1.echo(this.data.type);
-          // console.log(this.data1.senddata());
-          let route = '/panes/' + this.key +'/component/'+ this.data.key;
-          this.datasc.editData(route,this.editdata);
+        this.editdata['name'] = Polymer.dom(this.root).querySelector('#text_name').value;
+        this.editdata['text'] = Polymer.dom(this.root).querySelector('#text_box').value;
+        this.editdata['key'] = this.data.key;
+        this.editdata['type'] = this.data.type;
+        // this.data1.echo(this.data.type);
+        // console.log(this.data1.senddata());
+        let route = '/panes/' + this.key +'/component/'+ this.data.key;
+        this.datasc.editData(route,this.editdata);
       }
     });
   </script>

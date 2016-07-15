@@ -28,7 +28,7 @@
 
         <setting-text data="{{data}}" key="{{keyparent}}"></setting-text>
         <setting-picture data="{{data}}" key="{{keyparent}}"></setting-picture>
-        <setting-html id ="301" data="{{data}}" key="{{keyparent}}"></setting-html>
+        <setting-html data="{{data}}" key="{{keyparent}}"></setting-html>
         <setting-chart-basic data="{{data}}" key="{{keyparent}}"></setting-chart-basic>
         <setting-google-map data="{{data}}" key="{{keyparent}}"></setting-google-map>
 
@@ -89,15 +89,6 @@
           this.cc = '/panes/'+ this.keyparent+'/component/'+this.data.key;
             return firebase.database().ref(this.cc).remove();
         }
-      },
-      editSubcomponent: function() {
-
-          console.log(this.keyparent);
-        // console.log(this.editdatapic);
-        // console.log(this.edata);
-        // firebase.database().ref('/panes/' + this.keyparent +'/component/'+ this.data.key).set(this.edata);
-        // this.edata = [];
-        // console.log(this.edata);
       }
     });
   </script>
