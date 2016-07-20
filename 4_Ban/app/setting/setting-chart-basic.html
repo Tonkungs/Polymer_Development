@@ -9,8 +9,7 @@
     <paper-textarea id="chart_url" label="Json Url" required always-float-label placeholder="Json Url" value="{{data.setting.url}}"></paper-textarea multiple>
     <div class="buttons">
       <paper-button dialog-dismiss>ยกเลิก</paper-button>
-      <paper-button on-tap="editSub_chart" dialog-confirm autofocus >แก้ไข</paper-button>
-      <paper-button on-tap="addSubcomponent" dialog-confirm autofocus >ตกลง</paper-button>
+      <paper-button on-tap="managementData" dialog-confirm autofocus >ตกลง</paper-button>
     </div>
   </template>
   <script>
@@ -23,25 +22,12 @@
         }
       },
       attached: function() {
+          // file my-contents.html
         this.datasc = document.getElementById('data-management');
       },
-      addSubcomponent: function() {
-        let route = 'panes/'+this.key+'/component';
-        let newPostKey = this.datasc.findKey(route);
-        let chart_name = Polymer.dom(this.root).querySelector('#chart_name').value;
-        let chart_url = Polymer.dom(this.root).querySelector('#chart_url').value;
-        let postData = {
-          name:chart_name,
-          setting:{url:chart_url},
-          key:newPostKey,
-          type:"bar-chart"
-        };
-        let updates = {};
-        updates['/panes/'+this.key +'/component/'+ newPostKey] = postData;
-        this.datasc.addData(updates);
-      },
-      editSub_chart: function() {
-
+      managementData: function(){
+        //เช็คว่ามีการสั่งแก้ไขหรือไหม
+        if (this.edit === true) {
           this.editdata['name'] = Polymer.dom(this.root).querySelector('#chart_name').value;
           this.url = Polymer.dom(this.root).querySelector('#chart_url').value;
           this.editdata['setting'] = {'url' : this.url };
@@ -50,7 +36,22 @@
           // console.log(this.editdata);
           let route = '/panes/' + this.key +'/component/'+ this.data.key;
           this.datasc.editData(route,this.editdata);
+        }else {
+          let route = 'panes/'+this.key+'/component';
+          let newPostKey = this.datasc.findKey(route);
+          let chart_name = Polymer.dom(this.root).querySelector('#chart_name').value;
+          let chart_url = Polymer.dom(this.root).querySelector('#chart_url').value;
+          let postData = {
+            name:chart_name,
+            setting:{url:chart_url},
+            key:newPostKey,
+            type:"bar-chart"
+          };
+          let updates = {};
+          updates['/panes/'+this.key +'/component/'+ newPostKey] = postData;
+          this.datasc.addData(updates);
         }
+      }
     });
   </script>
 </dom-module>

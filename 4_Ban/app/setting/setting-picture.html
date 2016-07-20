@@ -10,8 +10,7 @@
     <paper-textarea id="pic_url" label="Picture Url" required always-float-label placeholder="Picture Url" value="{{data.setting.url}}"></paper-textarea multiple>
       <div class="buttons">
         <paper-button dialog-dismiss>ยกเลิก</paper-button>
-        <paper-button on-tap="editSub_pic" dialog-confirm autofocus >แก้ไข</paper-button>
-        <paper-button on-tap="addSubcomponent" dialog-confirm autofocus >ตกลง</paper-button>
+        <paper-button on-tap="managementData" dialog-confirm autofocus >ตกลง</paper-button>
       </div>
   </template>
   <script>
@@ -28,32 +27,35 @@
         }
       },
       attached: function() {
+          // file my-contents.html
         this.datasc = document.getElementById('data-management');
       },
-      addSubcomponent: function() {
-        let route = 'panes/'+this.key+'/component';
-        let newPostKey = this.datasc.findKey(route);
-        let pic_name = Polymer.dom(this.root).querySelector('#pic_name').value;
-        let pic_url = Polymer.dom(this.root).querySelector('#pic_url').value;
-        let postData = {
-          name:pic_name,
-          setting:{url:pic_url},
-          key:newPostKey,
-          type:"my-picture"
-        };
-        let updates = {};
-        updates['/panes/'+this.key +'/component/'+ newPostKey] = postData;
-        this.datasc.addData(updates);
-      },
-      editSub_pic: function() {
-        this.editdata['name'] = Polymer.dom(this.root).querySelector('#pic_name').value;
-        this.url = Polymer.dom(this.root).querySelector('#pic_url').value;
-        this.editdata['setting'] = {'url' : this.url };
-        // this.editdata['setting'] = this.url;
-        this.editdata['key'] = this.data.key;
-        this.editdata['type'] = this.data.type;
-        let route = '/panes/' + this.key +'/component/'+ this.data.key;
-        this.datasc.editData(route,this.editdata);
+      managementData: function(){
+        //เช็คว่ามีการสั่งแก้ไขหรือไหม
+        if (this.edit === true) {
+          this.editdata['name'] = Polymer.dom(this.root).querySelector('#pic_name').value;
+          this.url = Polymer.dom(this.root).querySelector('#pic_url').value;
+          this.editdata['setting'] = {'url' : this.url };
+          // this.editdata['setting'] = this.url;
+          this.editdata['key'] = this.data.key;
+          this.editdata['type'] = this.data.type;
+          let route = '/panes/' + this.key +'/component/'+ this.data.key;
+          this.datasc.editData(route,this.editdata);
+        }else {
+          let route = 'panes/'+this.key+'/component';
+          let newPostKey = this.datasc.findKey(route);
+          let pic_name = Polymer.dom(this.root).querySelector('#pic_name').value;
+          let pic_url = Polymer.dom(this.root).querySelector('#pic_url').value;
+          let postData = {
+            name:pic_name,
+            setting:{url:pic_url},
+            key:newPostKey,
+            type:"my-picture"
+          };
+          let updates = {};
+          updates['/panes/'+this.key +'/component/'+ newPostKey] = postData;
+          this.datasc.addData(updates);
+        }
       }
     });
   </script>

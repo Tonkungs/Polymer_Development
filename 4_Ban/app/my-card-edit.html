@@ -23,7 +23,7 @@
     <!-- เพิ่ม pane -->
     <paper-dialog id="add_comp_{{data.key}}" addPane>
       <h2>Add Component</h2>
-      <div>เลือก: {{selection}}44</div>
+      <!-- <div>เลือก: {{selection}}44</div> -->
       <paper-dropdown-menu label="Component">
         <paper-listbox selected="{{selection}}" class="dropdown-content">
           <paper-item>Text</paper-item>
@@ -34,23 +34,20 @@
         </paper-listbox>
       </paper-dropdown-menu>
         <iron-pages selected="[[selection]]">
-          <setting-text key="[[key]]"></setting-text>
-          <setting-picture key="[[key]]"></setting-picture>
-          <setting-html key="[[key]]"></setting-html>
-          <setting-chart-basic key="[[key]]"></setting-chart-basic>
-          <setting-google-map key="[[key]]"></setting-google-map>
+          <setting-text key="[[key]]" edit=[[edit]]></setting-text>
+          <setting-picture key="[[key]]" edit=[[edit]]></setting-picture>
+          <setting-html key="[[key]]" edit=[[edit]]></setting-html>
+          <setting-chart-basic key="[[key]]" edit=[[edit]]></setting-chart-basic>
+          <setting-google-map key="[[key]]" edit=[[edit]]></setting-google-map>
         </iron-pages>
-      <!-- <div class="buttons">
-        <paper-button dialog-dismiss>Decline</paper-button>
-        <paper-button on-tap="addComponent" dialog-confirm autofocus >Accept</paper-button>
-      </div> -->
+
     </paper-dialog>
       <!-- จบเพิ่ม pane -->
       <!-- แก้ไข pane -->
     <paper-dialog id="edit_card_{{data.key}}" editPane>
       <h2>Edit Menu</h2>
       <paper-input label="Name" value="{{data.name::input}}"></paper-input>
-      <paper-input label="ID Pane" value="{{data.key::input}}"></paper-input>
+      <!-- <paper-input label="ID Pane" value="{{data.key::input}}"></paper-input> -->
       <div class="buttons">
         <paper-button dialog-dismiss>Decline</paper-button>
         <paper-button on-tap="updataPane" dialog-confirm autofocus >Accept</paper-button>
@@ -61,9 +58,11 @@
   <script>
     Polymer({
       is: "my-card-edit",
-      addComponent: function(){
-          alert("เพิ่มจ้าff");
-          // alert(this.data.key)
+      properties: {
+        edit: {
+          type: Boolean,
+          value:false
+        }
       },
       updataPane: function(){
         // console.log(this.data.__firebaseKey__);

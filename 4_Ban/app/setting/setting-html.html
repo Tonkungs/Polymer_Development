@@ -7,11 +7,9 @@
   <template>
     <paper-input id="html_name" label="Component Name" required always-float-label placeholder="Component Name" value={{data.name}}></paper-input>
     <paper-textarea id="html_code" label="Html Code" required always-float-label placeholder="Html Code" value={{data.html_code}}></paper-textarea multiple>
-
-      <div class="buttons">
+    <div class="buttons">
         <paper-button dialog-dismiss>ยกเลิก</paper-button>
-        <paper-button on-tap="editSub_html" dialog-confirm autofocus >แก้ไข</paper-button>
-        <paper-button on-tap="addSubcomponent" dialog-confirm autofocus >ตกลง</paper-button>
+        <paper-button on-tap="managementData" dialog-confirm autofocus >ตกลง</paper-button>
       </div>
   </template>
   <script>
@@ -24,9 +22,20 @@
         }
       },
       attached: function() {
+          // file my-contents.html
         this.datasc = document.getElementById('data-management');
       },
-        addSubcomponent: function() {
+      managementData: function(){
+        //เช็คว่ามีการสั่งแก้ไขหรือไหม
+        if (this.edit === true) {
+          this.editdata['name'] = Polymer.dom(this.root).querySelector('#html_name').value;
+          this.editdata['html_code'] = Polymer.dom(this.root).querySelector('#html_code').value;
+          this.editdata['key'] = this.data.key;
+          this.editdata['type'] = this.data.type;
+          // console.log(this.editdata);
+          let route = '/panes/' + this.key +'/component/'+ this.data.key;
+          this.datasc.editData(route,this.editdata);
+        }else {
           let route = 'panes/'+this.key+'/component';
           let newPostKey = this.datasc.findKey(route);
           let html_name = Polymer.dom(this.root).querySelector('#html_name').value;
@@ -40,18 +49,8 @@
           let updates = {};
           updates['/panes/'+this.key +'/component/'+ newPostKey] = postData;
           this.datasc.addData(updates);
-        },
-        editSub_html: function() {
-
-            this.editdata['name'] = Polymer.dom(this.root).querySelector('#html_name').value;
-            this.editdata['html_code'] = Polymer.dom(this.root).querySelector('#html_code').value;
-            this.editdata['key'] = this.data.key;
-            this.editdata['type'] = this.data.type;
-            // console.log(this.editdata);
-            let route = '/panes/' + this.key +'/component/'+ this.data.key;
-            this.datasc.editData(route,this.editdata);
         }
-
+      }
     });
   </script>
 </dom-module>

@@ -2,12 +2,12 @@
   <style>
   </style>
   <template>
+    [[edit]]
     <paper-input id="text_name" label="Component Name" required always-float-label placeholder="Component Name" value="{{data.name}}"></paper-input>
     <paper-input id="text_box" multiple label="Context" required always-float-label placeholder="Context" value="{{data.text}}"></paper-input>
     <div class="buttons">
       <paper-button dialog-dismiss>ยกเลิก</paper-button>
-      <paper-button on-tap="editSub_text" dialog-confirm autofocus >แก้ไข</paper-button>
-      <paper-button on-tap="addSubcomponent" dialog-confirm autofocus >ตกลง</paper-button>
+      <paper-button on-tap="managementData" dialog-confirm autofocus >ตกลง</paper-button>
     </div>
   </template>
   <script>
@@ -19,39 +19,37 @@
           value: function() {return []; }
         }
       },
-      
       attached: function() {
+        // file my-contents.html
         this.datasc = document.getElementById('data-management');
       },
-      addSubcomponent: function() {
-        let route = 'panes/'+this.key+'/component';
-        let newPostKey = this.datasc.findKey(route);
-        let text_name = Polymer.dom(this.root).querySelector('#text_name').value;
-        let text_box = Polymer.dom(this.root).querySelector('#text_box').value;
-        let postData = {
-          name:text_name,
-          text:text_box,
-          key:newPostKey,
-          type:"my-text"
-        };
-        // console.log(postData);
-        let updates = {};
-        updates['/panes/'+this.key +'/component/'+ newPostKey] = postData;
-        // return firebase.database().ref().update(updates);
-        this.datasc.addData(updates);
+      managementData: function(){
+        //เช็คว่ามีการสั่งแก้ไขหรือไหม
+        if (this.edit === true) {
+          this.editdata['name'] = Polymer.dom(this.root).querySelector('#text_name').value;
+          this.editdata['text'] = Polymer.dom(this.root).querySelector('#text_box').value;
+          this.editdata['key'] = this.data.key;
+          this.editdata['type'] = this.data.type;
+          let route = '/panes/' + this.key +'/component/'+ this.data.key;
+          this.datasc.editData(route,this.editdata);
+        }else {
+          let route = 'panes/'+this.key+'/component';
+          let newPostKey = this.datasc.findKey(route);
+          let text_name = Polymer.dom(this.root).querySelector('#text_name').value;
+          let text_box = Polymer.dom(this.root).querySelector('#text_box').value;
+          let postData = {
+            name:text_name,
+            text:text_box,
+            key:newPostKey,
+            type:"my-text"
+          };
+          // console.log(postData);
+          let updates = {};
+          updates['/panes/'+this.key +'/component/'+ newPostKey] = postData;
+          // return firebase.database().ref().update(updates);
+          this.datasc.addData(updates);
+        }
       },
-
-      editSub_text: function() {
-
-        this.editdata['name'] = Polymer.dom(this.root).querySelector('#text_name').value;
-        this.editdata['text'] = Polymer.dom(this.root).querySelector('#text_box').value;
-        this.editdata['key'] = this.data.key;
-        this.editdata['type'] = this.data.type;
-        // this.data1.echo(this.data.type);
-        // console.log(this.data1.senddata());
-        let route = '/panes/' + this.key +'/component/'+ this.data.key;
-        this.datasc.editData(route,this.editdata);
-      }
     });
   </script>
 </dom-module>

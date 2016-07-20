@@ -26,17 +26,13 @@
       <h2>Edit Component</h2>
       <iron-pages selected="[[selection]]">
 
-        <setting-text data="{{data}}" key="{{keyparent}}"></setting-text>
-        <setting-picture data="{{data}}" key="{{keyparent}}"></setting-picture>
-        <setting-html data="{{data}}" key="{{keyparent}}"></setting-html>
-        <setting-chart-basic data="{{data}}" key="{{keyparent}}"></setting-chart-basic>
-        <setting-google-map data="{{data}}" key="{{keyparent}}"></setting-google-map>
+        <setting-text data="{{data}}" key="{{keyparent}}" edit=[[edit]]></setting-text>
+        <setting-picture data="{{data}}" key="{{keyparent}}" edit=[[edit]]></setting-picture>
+        <setting-html data="{{data}}" key="{{keyparent}}" edit=[[edit]]></setting-html>
+        <setting-chart-basic data="{{data}}" key="{{keyparent}}" edit=[[edit]]></setting-chart-basic>
+        <setting-google-map data="{{data}}" key="{{keyparent}}" edit=[[edit]]></setting-google-map>
 
       </iron-pages>
-      <!-- <div class="buttons">
-        <paper-button dialog-dismiss>Decline</paper-button>
-        <paper-button on-tap="editSubcomponent" dialog-confirm autofocus >Accept</paper-button>
-      </div> -->
     </paper-dialog>
     <!-- จบ pane -->
       <!-- {{data}} -->
@@ -61,6 +57,10 @@
         edata: {
           type: Array,
           value: function() {return []; }
+        },
+        edit: {
+          type: Boolean,
+          value:true
         }
       },
       ready: function() {

@@ -2,14 +2,8 @@
 <!-- <link rel="import" href="my-gridster.html"> -->
 <link rel="import" href="my-card.html">
 <dom-module id="my-contents">
- <style include="iron-flex"></style>
+<style include="iron-flex"></style>
 <style>
-.card{
-  width: 305px;
-  height: 300px;
-  border: 1px solid #000;
-  margin: 5px;
-}
 #pane_add{
   position: fixed;
   right: 0;
@@ -27,14 +21,48 @@
   <!-- <firebase-collection
   location="https://yellow-line.firebaseio.com/panes"
   data="{{panes}}"></firebase-collection> -->
-
-  <div class="horizontal around-justified layout">
-    <div class="layout horizontal flex-wrap">
-      <template is="dom-repeat" items="[[panes]]">
-        <my-card data="[[item]]"></my-card>
-      </template>
+  <!-- <center>tet -->
+  <iron-media-query query="(max-width: 666px)"
+                    query-matches="{{ isSmall }}"
+                    on-query-matches-changed="switchToCondensed"></iron-media-query>
+  <iron-media-query query="(max-width: 1247px)"
+                    query-matches="{{ isMedium }}"
+                    on-query-matches-changed="switchToCondensed"></iron-media-query>
+  <iron-media-query query="(min-width: 1248px)"
+                    query-matches="{{ isLarge }}"
+                    on-query-matches-changed="switchToCondensed"></iron-media-query>
+  <template is="dom-if" if="{{ isSmall }}">
+    <!-- 1111{{ isSmall }} | {{ isMedium }} | {{ isLarge }} -->
+    <div class="horizontal around-justified layout">
+      <div class="layout horizontal flex-wrap around-justified">
+        <template is="dom-repeat" items="[[panes]]">
+          <my-card data="[[item]]"></my-card>
+        </template>
+      </div>
     </div>
-  </div>
+  </template>
+
+  <template is="dom-if" if="{{ isMedium }}">
+    <!-- 2222เดกเ {{ isSmall }} | {{ isMedium }} | {{ isLarge }} -->
+    <div class="horizontal around-justified layout">
+      <div class="layout horizontal flex-wrap around-justified">
+        <template is="dom-repeat" items="[[panes]]">
+          <my-card data="[[item]]"></my-card>
+        </template>
+      </div>
+    </div>
+  </template>
+
+<template is="dom-if" if="{{ isLarge }}">
+  <!-- 3333 {{ isSmall }} | {{ isMedium }} | {{ isLarge }} -->
+    <div class="horizontal around-justified layout">
+      <div class="layout horizontal flex-wrap ">
+        <template is="dom-repeat" items="[[panes]]">
+          <my-card data="[[item]]"></my-card>
+        </template>
+      </div>
+    </div>
+  </template>
   <paper-fab mini icon="add" id ="pane_add" on-tap="addPane" title="เพิ่มแผ่นงาน"></paper-fab>
 </template>
 <script>
@@ -46,7 +74,6 @@ Polymer({
     }
   },
   ready: function() {
-    // console.log(this.panes);
     const testfn = (data) => {
       this.panes = data;
     }
@@ -83,7 +110,7 @@ Polymer({
   addPane: function(){
     var newPostKey = firebase.database().ref().child('panes').push().key;
     var postData = {
-      name:"ดูกราฟ",
+      name:"Pane",
       key:newPostKey
     };
     var updates = {};
