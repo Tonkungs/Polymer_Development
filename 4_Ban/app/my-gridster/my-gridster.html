@@ -1,0 +1,40 @@
+<script src="js/jquery.js" charset="utf-8"></script>
+<script src="js/jquery.gridster.min.js" charset="utf-8"></script>
+<link rel="stylesheet" type="text/css" href="css/jquery.gridster.min.css">
+<style >
+ul{
+  list-style-type: none;
+}
+/*li{
+  border: 1px solid #000;
+}*/
+.gridster .gs-w {
+  z-index: 0;
+}
+</style>
+<dom-module id="my-gridster">
+  <template>
+    <div class="gridster">
+      <ul>
+        <content></content>
+      </ul>
+    </div>
+  </template>
+  <script>
+  Polymer({
+    is: "my-gridster",
+    attached: function() {
+      // this.async(function(){
+      gridster = $(".gridster ul").gridster({
+        widget_margins: [10, 10],
+        widget_base_dimensions: [315, 300],
+        max_cols:3,
+        resize: {
+          enabled: true
+        }
+      }).data('gridster');
+      // });
+    }
+  });
+  </script>
+</dom-module>

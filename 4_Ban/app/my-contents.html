@@ -2,102 +2,104 @@
 <!-- <link rel="import" href="my-gridster.html"> -->
 <link rel="import" href="my-card.html">
 <dom-module id="my-contents">
-  <style>
-    :host {
-      display: block;
-    }
-    .flex-horizontal{
-      @apply(--layout-horizontal);
-      @apply(--layout-wrap);
-       /*@apply(--layout-around-justified);*/
-    }
-    .flex{
-      @apply(--layout-flex);
-    }
-    #pane_add{
-      position: fixed;
-      right: 0;
-      bottom: 0px;
-      margin-bottom: 10px;
-      margin-right: 25px;
-    }
-  </style>
-  <template>
-    <div class="flex-horizontal">
-     <!-- <firebase-collection
-       location="https://yellow-line.firebaseio.com/panes"
-       data="{{panes}}"></firebase-collection> -->
-       <template is="dom-repeat" items="[[panes]]">
-          <my-card data="[[item]]"></my-card>
-       </template>
+ <style include="iron-flex"></style>
+<style>
+.card{
+  width: 305px;
+  height: 300px;
+  border: 1px solid #000;
+  margin: 5px;
+}
+#pane_add{
+  position: fixed;
+  right: 0;
+  bottom: 0px;
+  margin-bottom: 10px;
+  margin-right: 25px;
+}
+.flex-wrap {
+  @apply(--layout-wrap);
+  width: 975px;
+}
+</style>
 
+<template>
+  <!-- <firebase-collection
+  location="https://yellow-line.firebaseio.com/panes"
+  data="{{panes}}"></firebase-collection> -->
+
+  <div class="horizontal around-justified layout">
+    <div class="layout horizontal flex-wrap">
+      <template is="dom-repeat" items="[[panes]]">
+        <my-card data="[[item]]"></my-card>
+      </template>
     </div>
-    <paper-fab mini icon="add" id ="pane_add" on-tap="addPane" title="เพิ่มแผ่นงาน"></paper-fab>
-  <!-- <my-gridster></my-gridster> -->
-  </template>
-  <script>
-    Polymer({
-      is: "my-contents",
-      properties: {
-        pane: {
-          type: Object
+  </div>
+  <paper-fab mini icon="add" id ="pane_add" on-tap="addPane" title="เพิ่มแผ่นงาน"></paper-fab>
+</template>
+<script>
+Polymer({
+  is: "my-contents",
+  properties: {
+    pane: {
+      type: Object
+    }
+  },
+  ready: function() {
+    // console.log(this.panes);
+    const testfn = (data) => {
+      this.panes = data;
+    }
+    let panes = [];
+    let datasRef = firebase.database().ref("/panes");
+    datasRef.on('value', (snapshot)=>{
+      panes = [];
+      //console.log(snapshot.val());
+      let getData;
+      let testGetData = snapshot.val();
+      for(var key in testGetData){
+        getData = testGetData[key]
+        let getDataSub = [];
+        let subData = testGetData[key].component;
+        for(var key2 in subData){
+          getDataSub.push(subData[key2]);
         }
-      },
-      ready: function() {
-        // console.log(this.panes);
-        const testfn = (data) => {
-          this.panes = data;
-        }
-        let panes = [];
-        let datasRef = firebase.database().ref("/panes");
-        datasRef.on('value', (snapshot)=>{
-          panes = [];
-          //console.log(snapshot.val());
-          let getData;
-          let testGetData = snapshot.val();
-          for(var key in testGetData){
-            getData = testGetData[key]
-            let getDataSub = [];
-            let subData = testGetData[key].component;
-            for(var key2 in subData){
-              getDataSub.push(subData[key2]);
-            }
-            getData.component = getDataSub;
+        getData.component = getDataSub;
 
-            panes.push(testGetData[key]);
-          }
-          //console.log(panes);
-          testfn(panes);
-        });
-        // console.log(this.panes);
-      },
-      attached: function() {
-        this.datasc = document.getElementById('data-management');
-        // this.datam = document.getElementById('301');
-      },
-      findKey:function(route){
-        return newPostKey = firebase.database().ref().child(route).push().key;
-      },
-      addPane: function(){
-        var newPostKey = firebase.database().ref().child('panes').push().key;
-        var postData = {
-          name:"ดูกราฟ",
-          key:newPostKey
-        };
-        var updates = {};
-        updates['/panes/' + newPostKey] = postData;
-        return firebase.database().ref().update(updates);
-      },
-      addData:function(data){
-        firebase.database().ref().update(data);
-      },
-      editData:function(route,data){
-        // console.log(route);
-        // console.log(data);
-        firebase.database().ref(route).set(data);
+        panes.push(testGetData[key]);
       }
+      //console.log(panes);
+      testfn(panes);
     });
+    // console.log(this.panes);
+  },
+  attached: function() {
+    this.datasc = document.getElementById('data-management');
+    // this.datam = document.getElementById('301');
+  },
+  findKey:function(route){
+    return newPostKey = firebase.database().ref().child(route).push().key;
+  },
+  addPane: function(){
+    var newPostKey = firebase.database().ref().child('panes').push().key;
+    var postData = {
+      name:"ดูกราฟ",
+      key:newPostKey
+    };
+    var updates = {};
+    updates['/panes/' + newPostKey] = postData;
+    return firebase.database().ref().update(updates);
+  },
+  addData:function(data){
+    firebase.database().ref().update(data);
+  },
+  editData:function(route,data){
+    // console.log(route);
+    // console.log(data);
+    firebase.database().ref(route).set(data);
+  }
+});
 
 
-  </script>
+</script>
 </dom-module>
